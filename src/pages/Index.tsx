@@ -1,19 +1,98 @@
-import Header from "@/components/Header";
-import Hero from "@/components/Hero";
-import Features from "@/components/Features";
-import CommunityAreas from "@/components/CommunityAreas";
-import Footer from "@/components/Footer";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { User } from "@supabase/supabase-js";
+import LanguageSelector from "@/components/LanguageSelector";
+import PostList from "@/components/PostList";
+import CreatePost from "@/components/CreatePost";
+import { useLanguage } from "@/hooks/useLanguage";
+import { Button } from "@/components/ui/button";
+import { Globe, User as UserIcon } from "lucide-react";
 
 const Index = () => {
+  const [user, setUser] = useState<User | null>(null);
+  const [userProfile, setUserProfile] = useState<any>(null);
+  const [refreshKey, setRefreshKey] = useState(0);
+  const navigate = useNavigate();
+  const { t } = useLanguage();
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+      if (session?.user) {
+        fetchUserProfile(session.user.id);
+      }
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      setUser(session?.user ?? null);
+      if (session?.user) {
+        fetchUserProfile(session.user.id);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const fetchUserProfile = async (userId: string) => {
+    const { data } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('user_id', userId)
+      .single();
+    setUserProfile(data);
+  };
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    setUser(null);
+    setUserProfile(null);
+  };
+
   return (
     <div className="min-h-screen bg-background">
-      <Header />
-      <main role="main">
-        <Hero />
-        <Features />
-        <CommunityAreas />
+      {/* Header */}
+      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
+        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <div className="h-8 w-8 rounded-lg bg-gradient-hero flex items-center justify-center">
+              <Globe className="h-5 w-5 text-primary-foreground" />
+            </div>
+            <h1 className="text-xl font-bold">{t('goya_communit')}</h1>
+          </div>
+
+          <div className="flex items-center space-x-3">
+            <LanguageSelector />
+            {user ? (
+              <Button variant="ghost" onClick={handleSignOut}>
+                {t('sign_out')}
+              </Button>
+            ) : (
+              <Button variant="community" onClick={() => navigate("/auth")}>
+                <UserIcon className="h-4 w-4 mr-2" />
+                {t('join')}
+              </Button>
+            )}
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="container mx-auto px-4 py-8 max-w-2xl">
+        <div className="text-center mb-8">
+          <h2 className="text-2xl font-bold mb-2">{t('global_community')}</h2>
+          <p className="text-muted-foreground">{t('share_ideas')}</p>
+        </div>
+
+        {user && (
+          <CreatePost 
+            userProfile={userProfile}
+            onPostCreated={() => setRefreshKey(prev => prev + 1)}
+          />
+        )}
+
+        <PostList key={refreshKey} />
       </main>
-      <Footer />
     </div>
   );
 };
