@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import PostCard from "./PostCard";
+import EditPost from "./EditPost";
 import { useLanguage } from "@/hooks/useLanguage";
 
 interface Post {
@@ -23,12 +24,16 @@ const PostList = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [userLikes, setUserLikes] = useState<Set<string>>(new Set());
+  const [currentUser, setCurrentUser] = useState<any>(null);
+  const [userProfile, setUserProfile] = useState<any>(null);
+  const [editingPost, setEditingPost] = useState<any>(null);
   const { toast } = useToast();
   const { t } = useLanguage();
 
   useEffect(() => {
     fetchPosts();
     fetchUserLikes();
+    getCurrentUser();
   }, []);
 
   const fetchPosts = async () => {
@@ -76,6 +81,24 @@ const PostList = () => {
       console.error('Error fetching posts:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const getCurrentUser = async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      setCurrentUser(user);
+      
+      if (user) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('user_id', user.id)
+          .single();
+        setUserProfile(profile);
+      }
+    } catch (error) {
+      console.error('Error getting current user:', error);
     }
   };
 
@@ -163,6 +186,23 @@ const PostList = () => {
     console.log('Comment on post:', postId);
   };
 
+  const handleEdit = (post: any) => {
+    setEditingPost(post);
+  };
+
+  const handleCancelEdit = () => {
+    setEditingPost(null);
+  };
+
+  const handlePostUpdated = () => {
+    setEditingPost(null);
+    fetchPosts();
+  };
+
+  const handlePostDeleted = () => {
+    fetchPosts();
+  };
+
   if (loading) {
     return (
       <div className="space-y-6">
@@ -198,12 +238,24 @@ const PostList = () => {
 
   return (
     <div className="space-y-6">
+      {editingPost && (
+        <EditPost
+          post={editingPost}
+          userProfile={userProfile}
+          onPostUpdated={handlePostUpdated}
+          onCancel={handleCancelEdit}
+        />
+      )}
+      
       {posts.map((post) => (
         <PostCard
           key={post.id}
           post={post}
+          currentUserId={currentUser?.id}
           onLike={handleLike}
           onComment={handleComment}
+          onEdit={handleEdit}
+          onDelete={handlePostDeleted}
           isLiked={userLikes.has(post.id)}
         />
       ))}

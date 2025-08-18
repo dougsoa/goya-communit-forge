@@ -2,10 +2,30 @@ import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Heart, MessageCircle, Share, MoreHorizontal } from "lucide-react";
+import { Heart, MessageCircle, Share, MoreHorizontal, Edit, Trash2 } from "lucide-react";
 import { useLanguage } from "@/hooks/useLanguage";
 import { formatDistanceToNow } from "date-fns";
 import { ptBR, enUS, es, fr, de, it, ja, ko, zhCN, ar, ru, hi } from "date-fns/locale";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import MDEditor from '@uiw/react-md-editor';
+import '@uiw/react-markdown-preview/markdown.css';
 
 const locales = {
   pt: ptBR,
@@ -30,6 +50,7 @@ interface PostCardProps {
     created_at: string;
     likes_count: number;
     comments_count: number;
+    user_id: string;
     profiles: {
       username: string;
       display_name: string;
@@ -38,12 +59,18 @@ interface PostCardProps {
   };
   onLike: (postId: string) => void;
   onComment: (postId: string) => void;
+  onEdit?: (post: any) => void;
+  onDelete?: () => void;
+  currentUserId?: string;
   isLiked?: boolean;
 }
 
-const PostCard = ({ post, onLike, onComment, isLiked = false }: PostCardProps) => {
+const PostCard = ({ post, onLike, onComment, onEdit, onDelete, currentUserId, isLiked = false }: PostCardProps) => {
   const { t, language } = useLanguage();
+  const { toast } = useToast();
   const [showFullContent, setShowFullContent] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const locale = locales[language] || locales.en;
   const timeAgo = formatDistanceToNow(new Date(post.created_at), {
@@ -55,6 +82,36 @@ const PostCard = ({ post, onLike, onComment, isLiked = false }: PostCardProps) =
   const displayContent = shouldTruncate && !showFullContent 
     ? post.content.slice(0, 300) + "..." 
     : post.content;
+
+  const isOwner = currentUserId === post.user_id;
+
+  const handleDelete = async () => {
+    setIsDeleting(true);
+    try {
+      const { error } = await supabase
+        .from('posts')
+        .delete()
+        .eq('id', post.id);
+
+      if (error) throw error;
+
+      toast({
+        title: "Post deleted",
+        description: "Your post has been deleted successfully.",
+      });
+
+      onDelete?.();
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setIsDeleting(false);
+      setShowDeleteDialog(false);
+    }
+  };
 
   return (
     <Card className="p-6 bg-gradient-card shadow-soft hover:shadow-medium transition-smooth border-primary/5">
@@ -78,9 +135,32 @@ const PostCard = ({ post, onLike, onComment, isLiked = false }: PostCardProps) =
           </div>
         </div>
 
-        <Button variant="ghost" size="icon" className="h-8 w-8">
-          <MoreHorizontal className="h-4 w-4" />
-        </Button>
+        {isOwner ? (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon" className="h-8 w-8">
+                <MoreHorizontal className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={() => onEdit?.(post)}>
+                <Edit className="h-4 w-4 mr-2" />
+                Edit
+              </DropdownMenuItem>
+              <DropdownMenuItem 
+                onClick={() => setShowDeleteDialog(true)}
+                className="text-destructive"
+              >
+                <Trash2 className="h-4 w-4 mr-2" />
+                Delete
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        ) : (
+          <Button variant="ghost" size="icon" className="h-8 w-8">
+            <MoreHorizontal className="h-4 w-4" />
+          </Button>
+        )}
       </div>
 
       {/* Content */}
@@ -90,7 +170,10 @@ const PostCard = ({ post, onLike, onComment, isLiked = false }: PostCardProps) =
         </h3>
         
         <div className="text-muted-foreground leading-relaxed">
-          <p>{displayContent}</p>
+          <MDEditor.Markdown 
+            source={displayContent} 
+            style={{ whiteSpace: 'pre-wrap', backgroundColor: 'transparent' }}
+          />
           
           {shouldTruncate && (
             <Button
@@ -149,6 +232,28 @@ const PostCard = ({ post, onLike, onComment, isLiked = false }: PostCardProps) =
           </Button>
         </div>
       </div>
+
+      {/* Delete Confirmation Dialog */}
+      <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete Post</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete this post? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction 
+              onClick={handleDelete}
+              disabled={isDeleting}
+              className="bg-destructive text-destructive-foreground"
+            >
+              {isDeleting ? "Deleting..." : "Delete"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </Card>
   );
 };
