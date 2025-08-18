@@ -7,7 +7,7 @@ import PostList from "@/components/PostList";
 import CreatePost from "@/components/CreatePost";
 import { useLanguage } from "@/hooks/useLanguage";
 import { Button } from "@/components/ui/button";
-import { Globe, User as UserIcon } from "lucide-react";
+import { Globe, User as UserIcon, LogOut } from "lucide-react";
 
 const Index = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -64,9 +64,24 @@ const Index = () => {
           <div className="flex items-center space-x-3">
             <LanguageSelector />
             {user ? (
-              <Button variant="ghost" onClick={handleSignOut}>
-                {t('sign_out')}
-              </Button>
+              <div className="flex items-center space-x-2">
+                <Button 
+                  variant="ghost" 
+                  onClick={() => navigate("/profile")}
+                  className="flex items-center space-x-2"
+                >
+                  <UserIcon className="h-4 w-4" />
+                  <span>Profile</span>
+                </Button>
+                <Button 
+                  variant="ghost" 
+                  onClick={handleSignOut}
+                  className="flex items-center space-x-2"
+                >
+                  <LogOut className="h-4 w-4" />
+                  <span>{t('sign_out')}</span>
+                </Button>
+              </div>
             ) : (
               <Button variant="community" onClick={() => navigate("/auth")}>
                 <UserIcon className="h-4 w-4 mr-2" />

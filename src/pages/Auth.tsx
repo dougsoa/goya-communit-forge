@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 const Auth = () => {
   const [isSignUp, setIsSignUp] = useState(false);
+  const [isForgotPassword, setIsForgotPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -46,7 +47,19 @@ const Auth = () => {
     setLoading(true);
 
     try {
-      if (isSignUp) {
+      if (isForgotPassword) {
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+          redirectTo: `${window.location.origin}/auth`,
+        });
+
+        if (error) throw error;
+
+        toast({
+          title: "Password reset email sent",
+          description: "Check your email for password reset instructions",
+        });
+        setIsForgotPassword(false);
+      } else if (isSignUp) {
         if (password !== confirmPassword) {
           toast({
             title: "Error",
@@ -109,12 +122,12 @@ const Auth = () => {
             {t('goya_communit')}
           </h1>
           <p className="text-muted-foreground">
-            {isSignUp ? t('create_account') : t('welcome_back')}
+            {isForgotPassword ? "Reset your password" : isSignUp ? t('create_account') : t('welcome_back')}
           </p>
         </div>
 
         <form onSubmit={handleAuth} className="space-y-4">
-          {isSignUp && (
+          {isSignUp && !isForgotPassword && (
             <>
               <div className="relative">
                 <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
@@ -154,43 +167,47 @@ const Auth = () => {
             />
           </div>
 
-          <div className="relative">
-            <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-            <Input
-              type={showPassword ? "text" : "password"}
-              placeholder={t('password')}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="pl-10 pr-10"
-              required
-            />
-            <Button
-              type="button"
-              variant="ghost"
-              size="icon"
-              className="absolute right-1 top-1 h-8 w-8"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? (
-                <EyeOff className="h-4 w-4" />
-              ) : (
-                <Eye className="h-4 w-4" />
-              )}
-            </Button>
-          </div>
+          {!isForgotPassword && (
+            <>
+              <div className="relative">
+                <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                <Input
+                  type={showPassword ? "text" : "password"}
+                  placeholder={t('password')}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="pl-10 pr-10"
+                  required
+                />
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="absolute right-1 top-1 h-8 w-8"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
+                </Button>
+              </div>
 
-          {isSignUp && (
-            <div className="relative">
-              <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-              <Input
-                type={showPassword ? "text" : "password"}
-                placeholder={t('confirm_password')}
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                className="pl-10"
-                required={isSignUp}
-              />
-            </div>
+              {isSignUp && (
+                <div className="relative">
+                  <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    type={showPassword ? "text" : "password"}
+                    placeholder={t('confirm_password')}
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    className="pl-10"
+                    required={isSignUp}
+                  />
+                </div>
+              )}
+            </>
           )}
 
           <Button
@@ -200,28 +217,57 @@ const Auth = () => {
             className="w-full"
             disabled={loading}
           >
-            {loading ? "..." : isSignUp ? t('sign_up') : t('sign_in')}
+            {loading ? "..." : isForgotPassword ? "Send Reset Email" : isSignUp ? t('sign_up') : t('sign_in')}
           </Button>
+
+          {!isSignUp && !isForgotPassword && (
+            <div className="text-center">
+              <Button
+                type="button"
+                variant="link"
+                onClick={() => setIsForgotPassword(true)}
+                className="text-primary text-sm"
+              >
+                Forgot your password?
+              </Button>
+            </div>
+          )}
         </form>
 
         <div className="text-center mt-6">
-          <p className="text-muted-foreground">
-            {isSignUp ? t('already_have_account') : t('dont_have_account')}
-          </p>
-          <Button
-            variant="link"
-            onClick={() => {
-              setIsSignUp(!isSignUp);
-              setEmail("");
-              setPassword("");
-              setConfirmPassword("");
-              setFullName("");
-              setUsername("");
-            }}
-            className="text-primary"
-          >
-            {isSignUp ? t('sign_in') : t('sign_up')}
-          </Button>
+          {isForgotPassword ? (
+            <Button
+              variant="link"
+              onClick={() => {
+                setIsForgotPassword(false);
+                setEmail("");
+                setPassword("");
+              }}
+              className="text-primary"
+            >
+              Back to sign in
+            </Button>
+          ) : (
+            <>
+              <p className="text-muted-foreground">
+                {isSignUp ? t('already_have_account') : t('dont_have_account')}
+              </p>
+              <Button
+                variant="link"
+                onClick={() => {
+                  setIsSignUp(!isSignUp);
+                  setEmail("");
+                  setPassword("");
+                  setConfirmPassword("");
+                  setFullName("");
+                  setUsername("");
+                }}
+                className="text-primary"
+              >
+                {isSignUp ? t('sign_in') : t('sign_up')}
+              </Button>
+            </>
+          )}
         </div>
       </Card>
     </div>

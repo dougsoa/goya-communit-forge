@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useLanguage } from "@/hooks/useLanguage";
 import { Plus, X } from "lucide-react";
+import RichTextEditor from "./RichTextEditor";
 
 interface CreatePostProps {
   userProfile?: {
@@ -148,12 +148,11 @@ const CreatePost = ({ userProfile, onPostCreated }: CreatePostProps) => {
           required
         />
 
-        <Textarea
-          placeholder={t('content_placeholder')}
+        <RichTextEditor
           value={content}
-          onChange={(e) => setContent(e.target.value)}
+          onChange={setContent}
+          placeholder={t('content_placeholder')}
           className="min-h-32 border-none bg-transparent p-0 resize-none focus-visible:ring-0"
-          required
         />
 
         <div className="flex justify-end space-x-3 pt-4 border-t border-border">
