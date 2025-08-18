@@ -33,20 +33,40 @@ const PostList = () => {
 
   const fetchPosts = async () => {
     try {
-      const { data, error } = await supabase
+      // Fetch posts
+      const { data: postsData, error: postsError } = await supabase
         .from('posts')
-        .select(`
-          *,
-          profiles!posts_user_id_fkey (
-            username,
-            display_name,
-            avatar_url
-          )
-        `)
+        .select('*')
         .order('created_at', { ascending: false });
 
-      if (error) throw error;
-      setPosts(data || []);
+      if (postsError) throw postsError;
+
+      // Fetch profiles for these posts
+      const userIds = [...new Set(postsData?.map(post => post.user_id) || [])];
+      
+      const { data: profilesData, error: profilesError } = await supabase
+        .from('profiles')
+        .select('user_id, username, display_name, avatar_url')
+        .in('user_id', userIds);
+
+      if (profilesError) throw profilesError;
+
+      // Create a map of profiles by user_id
+      const profilesMap = new Map(
+        profilesData?.map(profile => [profile.user_id, profile]) || []
+      );
+
+      // Combine posts with profiles
+      const postsWithProfiles = postsData?.map(post => ({
+        ...post,
+        profiles: profilesMap.get(post.user_id) || {
+          username: 'Unknown',
+          display_name: 'Unknown User',
+          avatar_url: null
+        }
+      })) || [];
+
+      setPosts(postsWithProfiles);
     } catch (error: any) {
       toast({
         title: "Error",
