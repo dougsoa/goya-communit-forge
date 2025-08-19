@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { User } from "@supabase/supabase-js";
 import LanguageSelector from "@/components/LanguageSelector";
 import PostList from "@/components/PostList";
+import MinimalPostList from "@/components/MinimalPostList";
 import CreatePost from "@/components/CreatePost";
 import { useLanguage } from "@/hooks/useLanguage";
 import { Button } from "@/components/ui/button";
@@ -106,7 +107,7 @@ const Index = () => {
           />
         )}
 
-        <PostList key={refreshKey} />
+        <MinimalPostList key={refreshKey} />
       </main>
     </div>
   );

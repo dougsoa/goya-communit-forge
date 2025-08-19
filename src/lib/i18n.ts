@@ -54,7 +54,30 @@ type TranslationKey =
   | 'create_account'
   | 'or'
   | 'already_have_account'
-  | 'dont_have_account';
+  | 'dont_have_account'
+  | 'view_post'
+  | 'back_to_feed'
+  | 'add_comment'
+  | 'post_comment'
+  | 'delete_comment'
+  | 'edit_comment'
+  | 'share_on_twitter'
+  | 'share_on_linkedin'
+  | 'share_on_facebook'
+  | 'copy_link'
+  | 'link_copied'
+  | 'reset_password'
+  | 'new_password'
+  | 'confirm_new_password'
+  | 'update_password'
+  | 'password_updated'
+  | 'forgot_password'
+  | 'send_reset_email'
+  | 'reset_email_sent'
+  | 'welcome_email_subject'
+  | 'welcome_email_body'
+  | 'reset_email_subject'
+  | 'reset_email_body';
 
 export const translations: Record<Language, Record<TranslationKey, string>> = {
   pt: {
@@ -96,7 +119,30 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     create_account: 'Criar Conta',
     or: 'ou',
     already_have_account: 'Já tem uma conta?',
-    dont_have_account: 'Não tem uma conta?'
+    dont_have_account: 'Não tem uma conta?',
+    view_post: 'Ver Post',
+    back_to_feed: 'Voltar ao Feed',
+    add_comment: 'Adicionar comentário...',
+    post_comment: 'Comentar',
+    delete_comment: 'Excluir Comentário',
+    edit_comment: 'Editar Comentário',
+    share_on_twitter: 'Compartilhar no Twitter',
+    share_on_linkedin: 'Compartilhar no LinkedIn',
+    share_on_facebook: 'Compartilhar no Facebook',
+    copy_link: 'Copiar Link',
+    link_copied: 'Link Copiado',
+    reset_password: 'Redefinir Senha',
+    new_password: 'Nova Senha',
+    confirm_new_password: 'Confirmar Nova Senha',
+    update_password: 'Atualizar Senha',
+    password_updated: 'Senha atualizada com sucesso',
+    forgot_password: 'Esqueci a Senha',
+    send_reset_email: 'Enviar Email de Redefinição',
+    reset_email_sent: 'Email de redefinição enviado',
+    welcome_email_subject: 'Bem-vindo ao Goya Communit',
+    welcome_email_body: 'Seja bem-vindo à nossa comunidade global',
+    reset_email_subject: 'Redefinir sua Senha',
+    reset_email_body: 'Clique no link para redefinir sua senha'
   },
   en: {
     goya_communit: 'Goya Communit',
@@ -137,7 +183,30 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     create_account: 'Create Account',
     or: 'or',
     already_have_account: 'Already have an account?',
-    dont_have_account: 'Don\'t have an account?'
+    dont_have_account: 'Don\'t have an account?',
+    view_post: 'View Post',
+    back_to_feed: 'Back to Feed',
+    add_comment: 'Add a comment...',
+    post_comment: 'Post Comment',
+    delete_comment: 'Delete Comment',
+    edit_comment: 'Edit Comment',
+    share_on_twitter: 'Share on Twitter',
+    share_on_linkedin: 'Share on LinkedIn',
+    share_on_facebook: 'Share on Facebook',
+    copy_link: 'Copy Link',
+    link_copied: 'Link Copied',
+    reset_password: 'Reset Password',
+    new_password: 'New Password',
+    confirm_new_password: 'Confirm New Password',
+    update_password: 'Update Password',
+    password_updated: 'Password updated successfully',
+    forgot_password: 'Forgot Password',
+    send_reset_email: 'Send Reset Email',
+    reset_email_sent: 'Reset email sent',
+    welcome_email_subject: 'Welcome to Goya Communit',
+    welcome_email_body: 'Welcome to our global community',
+    reset_email_subject: 'Reset Your Password',
+    reset_email_body: 'Click the link to reset your password'
   },
   es: {
     goya_communit: 'Goya Communit',
