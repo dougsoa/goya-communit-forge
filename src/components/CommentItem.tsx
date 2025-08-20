@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { MoreHorizontal, Edit, Trash2 } from "lucide-react";
-import { useLanguage } from "@/hooks/useLanguage";
-import { useToast } from "@/hooks/use-toast";
+import { Reply, Edit, Trash2, MoreHorizontal } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { ptBR, enUS, es, fr, de, it, ja, ko, zhCN, ar, ru, hi } from "date-fns/locale";
+import { useLanguage } from "@/hooks/useLanguage";
+import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import CreateComment from "./CreateComment";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -47,6 +47,8 @@ interface CommentItemProps {
     content: string;
     created_at: string;
     user_id: string;
+    post_id: string;
+    parent_comment_id?: string;
     profiles: {
       username: string;
       display_name: string;
@@ -54,16 +56,16 @@ interface CommentItemProps {
     };
   };
   currentUserId?: string;
-  onCommentDeleted: () => void;
+  onCommentUpdated: () => void;
+  replies?: any[];
 }
 
-const CommentItem = ({ comment, currentUserId, onCommentDeleted }: CommentItemProps) => {
+const CommentItem = ({ comment, currentUserId, onCommentUpdated, replies = [] }: CommentItemProps) => {
   const { t, language } = useLanguage();
   const { toast } = useToast();
-  const [isEditing, setIsEditing] = useState(false);
-  const [editContent, setEditContent] = useState(comment.content);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [showReplyForm, setShowReplyForm] = useState(false);
 
   const locale = locales[language] || locales.en;
   const timeAgo = formatDistanceToNow(new Date(comment.created_at), {
@@ -73,36 +75,8 @@ const CommentItem = ({ comment, currentUserId, onCommentDeleted }: CommentItemPr
 
   const isOwner = currentUserId === comment.user_id;
 
-  const handleEdit = async () => {
-    if (!editContent.trim()) return;
-
-    setLoading(true);
-    try {
-      const { error } = await supabase
-        .from('comments')
-        .update({ content: editContent.trim() })
-        .eq('id', comment.id);
-
-      if (error) throw error;
-
-      setIsEditing(false);
-      toast({
-        title: "Success",
-        description: "Comment updated successfully",
-      });
-    } catch (error: any) {
-      toast({
-        title: "Error",
-        description: error.message,
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const handleDelete = async () => {
-    setLoading(true);
+    setIsDeleting(true);
     try {
       const { error } = await supabase
         .from('comments')
@@ -111,21 +85,27 @@ const CommentItem = ({ comment, currentUserId, onCommentDeleted }: CommentItemPr
 
       if (error) throw error;
 
-      onCommentDeleted();
       toast({
-        title: "Success",
-        description: "Comment deleted successfully",
+        title: "Comentário excluído",
+        description: "Seu comentário foi excluído com sucesso.",
       });
+
+      onCommentUpdated();
     } catch (error: any) {
       toast({
-        title: "Error",
+        title: "Erro",
         description: error.message,
         variant: "destructive",
       });
     } finally {
-      setLoading(false);
+      setIsDeleting(false);
       setShowDeleteDialog(false);
     }
+  };
+
+  const handleReplyCreated = () => {
+    setShowReplyForm(false);
+    onCommentUpdated();
   };
 
   return (
@@ -157,72 +137,79 @@ const CommentItem = ({ comment, currentUserId, onCommentDeleted }: CommentItemPr
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => setIsEditing(true)}>
-                <Edit className="h-3 w-3 mr-2" />
-                {t('edit_comment')}
-              </DropdownMenuItem>
               <DropdownMenuItem 
                 onClick={() => setShowDeleteDialog(true)}
                 className="text-destructive"
               >
                 <Trash2 className="h-3 w-3 mr-2" />
-                {t('delete_comment')}
+                Excluir
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         )}
       </div>
 
-      {isEditing ? (
-        <div className="space-y-3">
-          <Textarea
-            value={editContent}
-            onChange={(e) => setEditContent(e.target.value)}
-            className="min-h-[80px]"
+      <p className="text-foreground leading-relaxed mb-3">
+        {comment.content}
+      </p>
+
+      {/* Reply button */}
+      <div className="mt-3">
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => setShowReplyForm(!showReplyForm)}
+          className="text-muted-foreground hover:text-foreground"
+        >
+          <Reply className="h-3 w-3 mr-1" />
+          Responder
+        </Button>
+      </div>
+
+      {/* Reply form */}
+      {showReplyForm && currentUserId && (
+        <div className="mt-4">
+          <CreateComment
+            postId={comment.post_id}
+            parentCommentId={comment.id}
+            onCommentCreated={handleReplyCreated}
+            placeholder="Escreva sua resposta..."
           />
-          <div className="flex justify-end space-x-2">
-            <Button 
-              variant="ghost" 
-              size="sm"
-              onClick={() => {
-                setIsEditing(false);
-                setEditContent(comment.content);
-              }}
-            >
-              {t('cancel')}
-            </Button>
-            <Button 
-              size="sm"
-              onClick={handleEdit}
-              disabled={!editContent.trim() || loading}
-            >
-              {loading ? "Saving..." : t('save')}
-            </Button>
-          </div>
         </div>
-      ) : (
-        <p className="text-foreground leading-relaxed">
-          {comment.content}
-        </p>
+      )}
+
+      {/* Replies */}
+      {replies.length > 0 && (
+        <div className="mt-4 pl-4 border-l-2 border-border space-y-3">
+          {replies.map((reply) => (
+            <CommentItem
+              key={reply.id}
+              comment={reply}
+              currentUserId={currentUserId}
+              onCommentUpdated={onCommentUpdated}
+              replies={[]}
+            />
+          ))}
+        </div>
       )}
 
       {/* Delete Confirmation Dialog */}
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete Comment</AlertDialogTitle>
+            <AlertDialogTitle>Excluir Comentário</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete this comment? This action cannot be undone.
+              Tem certeza que deseja excluir este comentário? Esta ação não pode ser desfeita.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
             <AlertDialogAction 
               onClick={handleDelete}
-              disabled={loading}
+              disabled={isDeleting}
               className="bg-destructive text-destructive-foreground"
             >
-              {loading ? "Deleting..." : "Delete"}
+              {isDeleting ? "Excluindo..." : "Excluir"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

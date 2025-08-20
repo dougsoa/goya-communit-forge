@@ -8,10 +8,12 @@ import { supabase } from "@/integrations/supabase/client";
 
 interface CreateCommentProps {
   postId: string;
+  parentCommentId?: string;
   onCommentCreated: () => void;
+  placeholder?: string;
 }
 
-const CreateComment = ({ postId, onCommentCreated }: CreateCommentProps) => {
+const CreateComment = ({ postId, parentCommentId, onCommentCreated, placeholder }: CreateCommentProps) => {
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
   const { t } = useLanguage();
@@ -28,8 +30,8 @@ const CreateComment = ({ postId, onCommentCreated }: CreateCommentProps) => {
       
       if (!user) {
         toast({
-          title: "Authentication required",
-          description: "Please sign in to comment",
+          title: "Autenticação necessária",
+          description: "Por favor, faça login para comentar",
           variant: "destructive",
         });
         return;
@@ -38,9 +40,10 @@ const CreateComment = ({ postId, onCommentCreated }: CreateCommentProps) => {
       const { error } = await supabase
         .from('comments')
         .insert({
+          content: content.trim(),
           post_id: postId,
           user_id: user.id,
-          content: content.trim()
+          parent_comment_id: parentCommentId || null,
         });
 
       if (error) throw error;
@@ -49,12 +52,12 @@ const CreateComment = ({ postId, onCommentCreated }: CreateCommentProps) => {
       onCommentCreated();
       
       toast({
-        title: "Success",
-        description: "Comment posted successfully",
+        title: "Sucesso",
+        description: "Comentário postado com sucesso",
       });
     } catch (error: any) {
       toast({
-        title: "Error",
+        title: "Erro",
         description: error.message,
         variant: "destructive",
       });
@@ -67,10 +70,10 @@ const CreateComment = ({ postId, onCommentCreated }: CreateCommentProps) => {
     <Card className="p-6">
       <form onSubmit={handleSubmit} className="space-y-4">
         <Textarea
-          placeholder={t('add_comment')}
+          placeholder={placeholder || t('add_comment')}
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          className="min-h-[100px]"
+          className="min-h-[80px] resize-none"
         />
         <div className="flex justify-end">
           <Button 
@@ -78,7 +81,7 @@ const CreateComment = ({ postId, onCommentCreated }: CreateCommentProps) => {
             disabled={!content.trim() || loading}
             className="bg-primary hover:bg-primary/90"
           >
-            {loading ? "Posting..." : t('post_comment')}
+            {loading ? "Postando..." : t('post_comment')}
           </Button>
         </div>
       </form>

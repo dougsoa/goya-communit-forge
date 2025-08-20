@@ -126,8 +126,8 @@ const PostList = () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
         toast({
-          title: "Authentication required",
-          description: "Please sign in to like posts",
+          title: "Autenticação necessária",
+          description: "Por favor, faça login para curtir posts",
           variant: "destructive",
         });
         return;
@@ -143,7 +143,12 @@ const PostList = () => {
           .eq('post_id', postId)
           .eq('user_id', user.id);
 
-        if (error) throw error;
+        if (error) {
+          // Handle unique constraint error silently for unlike
+          if (!error.message.includes('duplicate key')) {
+            throw error;
+          }
+        }
 
         setUserLikes(prev => {
           const newSet = new Set(prev);
@@ -153,7 +158,7 @@ const PostList = () => {
 
         setPosts(prev => prev.map(post => 
           post.id === postId 
-            ? { ...post, likes_count: post.likes_count - 1 }
+            ? { ...post, likes_count: Math.max(0, post.likes_count - 1) }
             : post
         ));
       } else {
@@ -162,7 +167,18 @@ const PostList = () => {
           .from('likes')
           .insert({ post_id: postId, user_id: user.id });
 
-        if (error) throw error;
+        if (error) {
+          // Handle unique constraint error gracefully
+          if (error.message.includes('duplicate key') || error.message.includes('unique_user_post_like')) {
+            toast({
+              title: "Já curtido",
+              description: "Você já curtiu este post",
+              variant: "destructive",
+            });
+            return;
+          }
+          throw error;
+        }
 
         setUserLikes(prev => new Set([...prev, postId]));
 
@@ -174,7 +190,7 @@ const PostList = () => {
       }
     } catch (error: any) {
       toast({
-        title: "Error",
+        title: "Erro",
         description: error.message,
         variant: "destructive",
       });

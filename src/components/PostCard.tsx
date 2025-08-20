@@ -204,9 +204,9 @@ const PostCard = ({ post, onLike, onComment, onEdit, onDelete, currentUserId, is
               }`} 
             />
             <span className="text-sm font-medium">
-              {post.likes_count > 0 && post.likes_count}
+              {post.likes_count > 0 ? post.likes_count : ""}
             </span>
-            <span className="text-sm">{t('like')}</span>
+            <span className="text-sm">{isLiked ? "Curtido" : t('like')}</span>
           </Button>
 
           <Button
