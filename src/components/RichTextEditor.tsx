@@ -1,7 +1,4 @@
-import { useState } from "react";
-import MDEditor from '@uiw/react-md-editor';
-import '@uiw/react-md-editor/markdown-editor.css';
-import '@uiw/react-markdown-preview/markdown.css';
+import { Textarea } from "@/components/ui/textarea";
 
 interface RichTextEditorProps {
   value: string;
@@ -12,25 +9,18 @@ interface RichTextEditorProps {
 
 const RichTextEditor = ({ value, onChange, placeholder, className }: RichTextEditorProps) => {
   return (
-    <div className={`rich-text-editor ${className || ''}`}>
-      <MDEditor
-        value={value}
-        onChange={(val) => onChange(val || '')}
-        preview="edit"
-        hideToolbar={false}
-        visibleDragbar={false}
-        textareaProps={{
-          placeholder: placeholder,
-          style: {
-            fontSize: 14,
-            lineHeight: 1.6,
-            fontFamily: 'inherit',
-          },
-        }}
-        height={200}
-        data-color-mode="light"
-      />
-    </div>
+    <Textarea
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      placeholder={placeholder}
+      className={`min-h-[200px] text-foreground resize-none border-none bg-transparent p-0 focus-visible:ring-0 ${className || ''}`}
+      style={{
+        fontSize: 16,
+        lineHeight: 1.6,
+        fontFamily: 'inherit',
+        color: 'hsl(var(--foreground))',
+      }}
+    />
   );
 };
 
