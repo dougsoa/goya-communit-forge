@@ -96,8 +96,8 @@ const PostCard = ({ post, onLike, onComment, onEdit, onDelete, currentUserId, is
       if (error) throw error;
 
       toast({
-        title: "Post deleted",
-        description: "Your post has been deleted successfully.",
+        title: "Post excluído",
+        description: "Seu post foi excluído com sucesso.",
       });
 
       onDelete?.();
@@ -145,14 +145,14 @@ const PostCard = ({ post, onLike, onComment, onEdit, onDelete, currentUserId, is
             <DropdownMenuContent align="end">
               <DropdownMenuItem onClick={() => onEdit?.(post)}>
                 <Edit className="h-4 w-4 mr-2" />
-                Edit
+                Editar
               </DropdownMenuItem>
               <DropdownMenuItem 
                 onClick={() => setShowDeleteDialog(true)}
                 className="text-destructive"
               >
                 <Trash2 className="h-4 w-4 mr-2" />
-                Delete
+                Excluir
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -181,7 +181,7 @@ const PostCard = ({ post, onLike, onComment, onEdit, onDelete, currentUserId, is
               className="p-0 h-auto text-primary font-medium mt-2"
               onClick={() => setShowFullContent(!showFullContent)}
             >
-              {showFullContent ? "Show less" : t('read_more')}
+              {showFullContent ? "Mostrar menos" : t('read_more')}
             </Button>
           )}
         </div>
@@ -222,14 +222,6 @@ const PostCard = ({ post, onLike, onComment, onEdit, onDelete, currentUserId, is
             <span className="text-sm">{t('comment')}</span>
           </Button>
 
-          <Button
-            variant="ghost"
-            size="sm"
-            className="flex items-center space-x-2 text-muted-foreground group"
-          >
-            <Share className="h-4 w-4 group-hover:scale-110 transition-smooth" />
-            <span className="text-sm">{t('share')}</span>
-          </Button>
         </div>
       </div>
 
@@ -237,19 +229,19 @@ const PostCard = ({ post, onLike, onComment, onEdit, onDelete, currentUserId, is
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete Post</AlertDialogTitle>
+            <AlertDialogTitle>Excluir Post</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete this post? This action cannot be undone.
+              Tem certeza que deseja excluir este post? Esta ação não pode ser desfeita.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
             <AlertDialogAction 
               onClick={handleDelete}
               disabled={isDeleting}
               className="bg-destructive text-destructive-foreground"
             >
-              {isDeleting ? "Deleting..." : "Delete"}
+              {isDeleting ? "Excluindo..." : "Excluir"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

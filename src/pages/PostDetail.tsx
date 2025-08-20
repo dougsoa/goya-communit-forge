@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ArrowLeft, Heart, MessageCircle, Share2, Twitter, Linkedin, Facebook, Link } from "lucide-react";
+import { ArrowLeft, Heart, MessageCircle, Edit, Trash2, MoreVertical } from "lucide-react";
 import { useLanguage } from "@/hooks/useLanguage";
 import { useToast } from "@/hooks/use-toast";
 import { formatDistanceToNow } from "date-fns";
@@ -11,6 +11,23 @@ import { ptBR, enUS, es, fr, de, it, ja, ko, zhCN, ar, ru, hi } from "date-fns/l
 import MDEditor from '@uiw/react-md-editor';
 import CommentsList from "@/components/CommentsList";
 import CreateComment from "@/components/CreateComment";
+import EditPost from "@/components/EditPost";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 const locales = {
   pt: ptBR,
@@ -52,6 +69,9 @@ const PostDetail = () => {
   const [isLiked, setIsLiked] = useState(false);
   const [user, setUser] = useState<any>(null);
   const [commentsKey, setCommentsKey] = useState(0);
+  const [isEditing, setIsEditing] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const locale = locales[language] || locales.en;
 
@@ -174,34 +194,37 @@ const PostDetail = () => {
     }
   };
 
-  const handleShare = (platform: string) => {
-    const url = window.location.href;
-    const text = post?.title || '';
-    
-    let shareUrl = '';
-    
-    switch (platform) {
-      case 'twitter':
-        shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
-        break;
-      case 'linkedin':
-        shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
-        break;
-      case 'facebook':
-        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
-        break;
-      case 'copy':
-        navigator.clipboard.writeText(url);
-        toast({
-          title: t('link_copied'),
-          description: "Link copied to clipboard",
-        });
-        return;
+  const handleDelete = async () => {
+    setIsDeleting(true);
+    try {
+      const { error } = await supabase
+        .from('posts')
+        .delete()
+        .eq('id', post?.id);
+
+      if (error) throw error;
+
+      toast({
+        title: "Post deletado",
+        description: "Seu post foi excluído com sucesso.",
+      });
+
+      navigate('/');
+    } catch (error: any) {
+      toast({
+        title: "Erro",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setIsDeleting(false);
+      setShowDeleteDialog(false);
     }
-    
-    if (shareUrl) {
-      window.open(shareUrl, '_blank', 'width=600,height=400');
-    }
+  };
+
+  const handlePostUpdated = () => {
+    setIsEditing(false);
+    fetchPost();
   };
 
   const refreshComments = () => {
@@ -268,89 +291,115 @@ const PostDetail = () => {
         </Button>
 
         {/* Post content */}
-        <Card className="p-8 mb-6">
-          {/* Title */}
-          <h1 className="text-3xl font-bold text-foreground mb-4 leading-tight">
-            {post.title}
-          </h1>
+        {isEditing ? (
+          <EditPost
+            post={post}
+            userProfile={post.profiles}
+            onPostUpdated={handlePostUpdated}
+            onCancel={() => setIsEditing(false)}
+          />
+        ) : (
+          <Card className="p-8 mb-6">
+            {/* Header with edit options */}
+            <div className="flex items-start justify-between mb-4">
+              <div>
+                <h1 className="text-3xl font-bold text-foreground mb-4 leading-tight">
+                  {post.title}
+                </h1>
+                
+                {/* Author info */}
+                <div className="flex items-center text-sm text-muted-foreground">
+                  <span className="font-medium">
+                    {post.profiles.display_name || post.profiles.username}
+                  </span>
+                  <span className="mx-2">•</span>
+                  <span>{timeAgo}</span>
+                </div>
+              </div>
 
-          {/* Author info */}
-          <div className="flex items-center mb-6 text-sm text-muted-foreground">
-            <span className="font-medium">
-              {post.profiles.display_name || post.profiles.username}
-            </span>
-            <span className="mx-2">•</span>
-            <span>{timeAgo}</span>
-          </div>
+              {/* Edit/Delete options for post owner */}
+              {user && user.id === post.user_id && (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="icon">
+                      <MoreVertical className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem onClick={() => setIsEditing(true)}>
+                      <Edit className="h-4 w-4 mr-2" />
+                      Editar
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      onClick={() => setShowDeleteDialog(true)}
+                      className="text-destructive"
+                    >
+                      <Trash2 className="h-4 w-4 mr-2" />
+                      Excluir
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              )}
+            </div>
 
-          {/* Content */}
-          <div className="prose prose-lg max-w-none mb-8">
-            <MDEditor.Markdown 
-              source={post.content} 
-              style={{ backgroundColor: 'transparent' }}
-            />
-          </div>
+            {/* Content */}
+            <div className="prose prose-lg max-w-none mb-8">
+              <MDEditor.Markdown 
+                source={post.content} 
+                style={{ backgroundColor: 'transparent' }}
+              />
+            </div>
+            {/* Actions */}
+            <div className="flex items-center justify-between pt-6 border-t border-border">
+              <div className="flex items-center space-x-6">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className={`flex items-center space-x-2 group ${
+                    isLiked ? "text-red-500" : "text-muted-foreground"
+                  }`}
+                  onClick={handleLike}
+                >
+                  <Heart 
+                    className={`h-5 w-5 group-hover:scale-110 transition-smooth ${
+                      isLiked ? "fill-current" : ""
+                    }`} 
+                  />
+                  <span className="font-medium">{post.likes_count}</span>
+                  <span>{t('like')}</span>
+                </Button>
 
-          {/* Actions */}
-          <div className="flex items-center justify-between pt-6 border-t border-border">
-            <div className="flex items-center space-x-6">
-              <Button
-                variant="ghost"
-                size="sm"
-                className={`flex items-center space-x-2 group ${
-                  isLiked ? "text-red-500" : "text-muted-foreground"
-                }`}
-                onClick={handleLike}
-              >
-                <Heart 
-                  className={`h-5 w-5 group-hover:scale-110 transition-smooth ${
-                    isLiked ? "fill-current" : ""
-                  }`} 
-                />
-                <span className="font-medium">{post.likes_count}</span>
-                <span>{t('like')}</span>
-              </Button>
-
-              <div className="flex items-center space-x-2 text-muted-foreground">
-                <MessageCircle className="h-5 w-5" />
-                <span className="font-medium">{post.comments_count}</span>
-                <span>{t('comment')}</span>
+                <div className="flex items-center space-x-2 text-muted-foreground">
+                  <MessageCircle className="h-5 w-5" />
+                  <span className="font-medium">{post.comments_count}</span>
+                  <span>{t('comment')}</span>
+                </div>
               </div>
             </div>
+          </Card>
+        )}
 
-            {/* Share buttons */}
-            <div className="flex items-center space-x-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => handleShare('twitter')}
+        {/* Delete Confirmation Dialog */}
+        <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Excluir Post</AlertDialogTitle>
+              <AlertDialogDescription>
+                Tem certeza que deseja excluir este post? Esta ação não pode ser desfeita.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancelar</AlertDialogCancel>
+              <AlertDialogAction 
+                onClick={handleDelete}
+                disabled={isDeleting}
+                className="bg-destructive text-destructive-foreground"
               >
-                <Twitter className="h-4 w-4" />
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => handleShare('linkedin')}
-              >
-                <Linkedin className="h-4 w-4" />
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => handleShare('facebook')}
-              >
-                <Facebook className="h-4 w-4" />
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => handleShare('copy')}
-              >
-                <Link className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-        </Card>
+                {isDeleting ? "Excluindo..." : "Excluir"}
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
 
         {/* Comments section */}
         <div className="space-y-6">
