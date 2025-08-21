@@ -23,6 +23,26 @@ const MinimalPostList = () => {
 
   useEffect(() => {
     fetchPosts();
+
+    // Real-time subscription para sincronização entre dispositivos
+    const postsChannel = supabase
+      .channel('minimal-posts-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'posts'
+        },
+        () => {
+          fetchPosts();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(postsChannel);
+    };
   }, []);
 
   const fetchPosts = async () => {

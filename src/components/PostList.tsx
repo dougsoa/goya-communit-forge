@@ -34,6 +34,61 @@ const PostList = () => {
     fetchPosts();
     fetchUserLikes();
     getCurrentUser();
+
+    // Real-time subscription for posts
+    const postsChannel = supabase
+      .channel('posts-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'posts'
+        },
+        () => {
+          fetchPosts();
+        }
+      )
+      .subscribe();
+
+    // Real-time subscription for likes
+    const likesChannel = supabase
+      .channel('likes-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'likes'
+        },
+        () => {
+          fetchPosts();
+          fetchUserLikes();
+        }
+      )
+      .subscribe();
+
+    // Real-time subscription for comments
+    const commentsChannel = supabase
+      .channel('comments-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'comments'
+        },
+        () => {
+          fetchPosts();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(postsChannel);
+      supabase.removeChannel(likesChannel);
+      supabase.removeChannel(commentsChannel);
+    };
   }, []);
 
   const fetchPosts = async () => {

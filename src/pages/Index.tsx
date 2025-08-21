@@ -52,49 +52,67 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
+      {/* Header - Mobile optimized */}
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+        <div className="container mx-auto px-4 h-14 flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <div className="h-8 w-8 rounded-lg bg-gradient-hero flex items-center justify-center">
-              <Globe className="h-5 w-5 text-primary-foreground" />
+            <div className="h-7 w-7 rounded-lg bg-gradient-hero flex items-center justify-center">
+              <Globe className="h-4 w-4 text-primary-foreground" />
             </div>
-            <h1 className="text-xl font-bold">{t('goya_communit')}</h1>
+            <h1 className="text-lg font-bold sm:text-xl">{t('goya_communit')}</h1>
           </div>
 
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-2">
             <LanguageSelector />
             {user ? (
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-1 sm:space-x-2">
                 <Button 
                   variant="ghost" 
+                  size="sm"
                   onClick={() => navigate("/profile")}
-                  className="flex items-center space-x-2"
+                  className="hidden sm:flex items-center space-x-2"
                 >
                   <UserIcon className="h-4 w-4" />
                   <span>Profile</span>
                 </Button>
                 <Button 
                   variant="ghost" 
+                  size="sm"
+                  onClick={() => navigate("/profile")}
+                  className="sm:hidden p-2"
+                >
+                  <UserIcon className="h-4 w-4" />
+                </Button>
+                <Button 
+                  variant="ghost" 
+                  size="sm"
                   onClick={handleSignOut}
-                  className="flex items-center space-x-2"
+                  className="hidden sm:flex items-center space-x-2"
                 >
                   <LogOut className="h-4 w-4" />
                   <span>{t('sign_out')}</span>
                 </Button>
+                <Button 
+                  variant="ghost" 
+                  size="sm"
+                  onClick={handleSignOut}
+                  className="sm:hidden p-2"
+                >
+                  <LogOut className="h-4 w-4" />
+                </Button>
               </div>
             ) : (
-              <Button variant="community" onClick={() => navigate("/auth")}>
-                <UserIcon className="h-4 w-4 mr-2" />
-                {t('join')}
+              <Button variant="community" size="sm" onClick={() => navigate("/auth")}>
+                <UserIcon className="h-4 w-4 mr-1 sm:mr-2" />
+                <span className="text-sm">{t('join')}</span>
               </Button>
             )}
           </div>
         </div>
       </header>
 
-      {/* Main Content */}
-      <main className="container mx-auto px-4 py-8 max-w-2xl">
+      {/* Main Content - Mobile optimized */}
+      <main className="container mx-auto px-4 py-6 max-w-2xl">
         <div className="text-center mb-8">
           <h2 className="text-2xl font-bold mb-2">{t('global_community')}</h2>
           <p className="text-muted-foreground">{t('share_ideas')}</p>
