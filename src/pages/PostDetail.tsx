@@ -343,10 +343,10 @@ const PostDetail = () => {
             </div>
 
             {/* Content */}
-            <div className="prose prose-lg max-w-none mb-8">
+            <div className="prose prose-lg max-w-none mb-8 text-foreground [&_*]:text-foreground">
               <MDEditor.Markdown 
                 source={post.content} 
-                style={{ backgroundColor: 'transparent' }}
+                style={{ backgroundColor: 'transparent', color: 'hsl(var(--foreground))' }}
               />
             </div>
             {/* Actions */}
