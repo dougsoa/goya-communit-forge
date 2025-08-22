@@ -8,6 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useLanguage } from "@/hooks/useLanguage";
 import { X } from "lucide-react";
 import RichTextEditor from "./RichTextEditor";
+import { sanitizeInput, validateTitle, validateContent } from "@/lib/security";
 
 interface EditPostProps {
   post: {
@@ -34,7 +35,30 @@ const EditPost = ({ post, userProfile, onPostUpdated, onCancel }: EditPostProps)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title.trim() || !content.trim()) return;
+    
+    // Client-side validation and sanitization
+    const sanitizedTitle = sanitizeInput(title);
+    const sanitizedContent = sanitizeInput(content);
+    
+    const titleValidation = validateTitle(sanitizedTitle);
+    if (!titleValidation.isValid) {
+      toast({
+        title: "Invalid title",
+        description: titleValidation.error,
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    const contentValidation = validateContent(sanitizedContent);
+    if (!contentValidation.isValid) {
+      toast({
+        title: "Invalid content",
+        description: contentValidation.error,
+        variant: "destructive",
+      });
+      return;
+    }
 
     setLoading(true);
 
@@ -42,8 +66,8 @@ const EditPost = ({ post, userProfile, onPostUpdated, onCancel }: EditPostProps)
       const { error } = await supabase
         .from('posts')
         .update({
-          title: title.trim(),
-          content: content.trim(),
+          title: sanitizedTitle,
+          content: sanitizedContent,
         })
         .eq('id', post.id);
 

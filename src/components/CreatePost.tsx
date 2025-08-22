@@ -8,6 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useLanguage } from "@/hooks/useLanguage";
 import { Plus, X } from "lucide-react";
 import RichTextEditor from "./RichTextEditor";
+import { sanitizeInput, validateTitle, validateContent, PostRateLimit } from "@/lib/security";
 
 interface CreatePostProps {
   userProfile?: {
@@ -28,7 +29,42 @@ const CreatePost = ({ userProfile, onPostCreated }: CreatePostProps) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title.trim() || !content.trim()) return;
+    
+    // Client-side validation and sanitization
+    const sanitizedTitle = sanitizeInput(title);
+    const sanitizedContent = sanitizeInput(content);
+    
+    const titleValidation = validateTitle(sanitizedTitle);
+    if (!titleValidation.isValid) {
+      toast({
+        title: "Invalid title",
+        description: titleValidation.error,
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    const contentValidation = validateContent(sanitizedContent);
+    if (!contentValidation.isValid) {
+      toast({
+        title: "Invalid content",
+        description: contentValidation.error,
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    // Rate limiting check
+    const rateLimitCheck = PostRateLimit.canPost();
+    if (!rateLimitCheck.allowed) {
+      const minutes = Math.ceil((rateLimitCheck.timeUntilReset || 0) / (60 * 1000));
+      toast({
+        title: "Rate limit exceeded",
+        description: `You can create another post in ${minutes} minutes. Maximum 10 posts per hour.`,
+        variant: "destructive",
+      });
+      return;
+    }
 
     setLoading(true);
 
@@ -46,12 +82,15 @@ const CreatePost = ({ userProfile, onPostCreated }: CreatePostProps) => {
       const { error } = await supabase
         .from('posts')
         .insert({
-          title: title.trim(),
-          content: content.trim(),
+          title: sanitizedTitle,
+          content: sanitizedContent,
           user_id: user.id,
         });
 
       if (error) throw error;
+      
+      // Record successful post for rate limiting
+      PostRateLimit.recordPost();
 
       toast({
         title: t('publish'),

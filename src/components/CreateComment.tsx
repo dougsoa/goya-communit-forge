@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/card";
 import { useLanguage } from "@/hooks/useLanguage";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { sanitizeInput, validateComment } from "@/lib/security";
 
 interface CreateCommentProps {
   postId: string;
@@ -22,7 +23,18 @@ const CreateComment = ({ postId, parentCommentId, onCommentCreated, placeholder 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!content.trim()) return;
+    // Client-side validation and sanitization
+    const sanitizedContent = sanitizeInput(content);
+    
+    const contentValidation = validateComment(sanitizedContent);
+    if (!contentValidation.isValid) {
+      toast({
+        title: "Invalid comment",
+        description: contentValidation.error,
+        variant: "destructive",
+      });
+      return;
+    }
 
     setLoading(true);
     try {
@@ -40,7 +52,7 @@ const CreateComment = ({ postId, parentCommentId, onCommentCreated, placeholder 
       const { error } = await supabase
         .from('comments')
         .insert({
-          content: content.trim(),
+          content: sanitizedContent,
           post_id: postId,
           user_id: user.id,
           parent_comment_id: parentCommentId || null,
