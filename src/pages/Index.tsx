@@ -6,7 +6,7 @@ import LanguageSelector from "@/components/LanguageSelector";
 import PostList from "@/components/PostList";
 import MinimalPostList from "@/components/MinimalPostList";
 import CreatePost from "@/components/CreatePost";
-import Footer from "@/components/Footer";
+import FooterBar from "@/components/FooterBar";
 import { useLanguage } from "@/hooks/useLanguage";
 import { Button } from "@/components/ui/button";
 import { Globe, User as UserIcon, LogOut } from "lucide-react";
@@ -127,8 +127,8 @@ const Index = () => {
         )}
 
         <MinimalPostList key={refreshKey} />
-
-        <Footer />
+      
+      <FooterBar />
       </main>
     </div>
   );
