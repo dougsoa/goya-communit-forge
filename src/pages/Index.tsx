@@ -5,6 +5,7 @@ import { User } from "@supabase/supabase-js";
 import LanguageSelector from "@/components/LanguageSelector";
 import PostList from "@/components/PostList";
 import MinimalPostList from "@/components/MinimalPostList";
+import EnhancedPostList from "@/components/EnhancedPostList";
 import CreatePost from "@/components/CreatePost";
 import FooterBar from "@/components/FooterBar";
 import { useLanguage } from "@/hooks/useLanguage";
@@ -126,7 +127,7 @@ const Index = () => {
           />
         )}
 
-        <MinimalPostList key={refreshKey} />
+        <EnhancedPostList key={refreshKey} user={user} />
       
       <FooterBar />
       </main>

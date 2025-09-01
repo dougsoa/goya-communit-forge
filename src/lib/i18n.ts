@@ -77,7 +77,17 @@ type TranslationKey =
   | 'welcome_email_subject'
   | 'welcome_email_body'
   | 'reset_email_subject'
-  | 'reset_email_body';
+  | 'reset_email_body'
+  | 'search_posts'
+  | 'filters'
+  | 'clear_filters'
+  | 'author'
+  | 'all_posts'
+  | 'my_posts'
+  | 'others_posts'
+  | 'topics'
+  | 'no_posts_found'
+  | 'no_posts_yet';
 
 export const translations: Record<Language, Record<TranslationKey, string>> = {
   pt: {
@@ -142,7 +152,17 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     welcome_email_subject: 'Bem-vindo ao Goya Communit',
     welcome_email_body: 'Seja bem-vindo à nossa comunidade global',
     reset_email_subject: 'Redefinir sua Senha',
-    reset_email_body: 'Clique no link para redefinir sua senha'
+    reset_email_body: 'Clique no link para redefinir sua senha',
+    search_posts: 'Buscar posts, autores...',
+    filters: 'Filtros',
+    clear_filters: 'Limpar',
+    author: 'Autor',
+    all_posts: 'Todos',
+    my_posts: 'Meus Posts',
+    others_posts: 'Outros',
+    topics: 'Tópicos',
+    no_posts_found: 'Nenhum post encontrado com os filtros atuais.',
+    no_posts_yet: 'Ainda não há posts. Seja o primeiro a compartilhar algo inspirador!'
   },
   en: {
     goya_communit: 'Goya Communit',
@@ -206,7 +226,17 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     welcome_email_subject: 'Welcome to Goya Communit',
     welcome_email_body: 'Welcome to our global community',
     reset_email_subject: 'Reset Your Password',
-    reset_email_body: 'Click the link to reset your password'
+    reset_email_body: 'Click the link to reset your password',
+    search_posts: 'Search posts, authors...',
+    filters: 'Filters',
+    clear_filters: 'Clear',
+    author: 'Author',
+    all_posts: 'All',
+    my_posts: 'My Posts',
+    others_posts: 'Others',
+    topics: 'Topics',
+    no_posts_found: 'No posts found with current filters.',
+    no_posts_yet: 'No posts yet. Be the first to share something inspiring!'
   },
   es: {
     goya_communit: 'Goya Communit',
@@ -270,7 +300,17 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     welcome_email_subject: 'Bienvenido a Goya Communit',
     welcome_email_body: 'Bienvenido a nuestra comunidad global',
     reset_email_subject: 'Restablecer tu Contraseña',
-    reset_email_body: 'Haz clic en el enlace para restablecer tu contraseña'
+    reset_email_body: 'Haz clic en el enlace para restablecer tu contraseña',
+    search_posts: 'Buscar posts, autores...',
+    filters: 'Filtros',
+    clear_filters: 'Limpiar',
+    author: 'Autor',
+    all_posts: 'Todos',
+    my_posts: 'Mis Posts',
+    others_posts: 'Otros',
+    topics: 'Temas',
+    no_posts_found: 'No se encontraron posts con los filtros actuales.',
+    no_posts_yet: '¡Aún no hay posts. Sé el primero en compartir algo inspirador!'
   },
   fr: {
     goya_communit: 'Goya Communit',
@@ -334,7 +374,17 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     welcome_email_subject: 'Bienvenue sur Goya Communit',
     welcome_email_body: 'Bienvenue dans notre communauté mondiale',
     reset_email_subject: 'Réinitialiser Votre Mot de Passe',
-    reset_email_body: 'Cliquez sur le lien pour réinitialiser votre mot de passe'
+    reset_email_body: 'Cliquez sur le lien pour réinitialiser votre mot de passe',
+    search_posts: 'Rechercher posts, auteurs...',
+    filters: 'Filtres',
+    clear_filters: 'Effacer',
+    author: 'Auteur',
+    all_posts: 'Tous',
+    my_posts: 'Mes Posts',
+    others_posts: 'Autres',
+    topics: 'Sujets',
+    no_posts_found: 'Aucun post trouvé avec les filtres actuels.',
+    no_posts_yet: 'Pas encore de posts. Soyez le premier à partager quelque chose d\'inspirant!'
   },
   de: {
     goya_communit: 'Goya Communit',
@@ -398,7 +448,17 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     welcome_email_subject: 'Willkommen bei Goya Communit',
     welcome_email_body: 'Willkommen in unserer globalen Gemeinschaft',
     reset_email_subject: 'Ihr Passwort Zurücksetzen',
-    reset_email_body: 'Klicken Sie auf den Link, um Ihr Passwort zurückzusetzen'
+    reset_email_body: 'Klicken Sie auf den Link, um Ihr Passwort zurückzusetzen',
+    search_posts: 'Posts, Autoren suchen...',
+    filters: 'Filter',
+    clear_filters: 'Löschen',
+    author: 'Autor',
+    all_posts: 'Alle',
+    my_posts: 'Meine Posts',
+    others_posts: 'Andere',
+    topics: 'Themen',
+    no_posts_found: 'Keine Posts mit den aktuellen Filtern gefunden.',
+    no_posts_yet: 'Noch keine Posts. Seien Sie der Erste, der etwas Inspirierendes teilt!'
   },
   it: {
     goya_communit: 'Goya Communit',
@@ -462,7 +522,17 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     welcome_email_subject: 'Benvenuto su Goya Communit',
     welcome_email_body: 'Benvenuto nella nostra comunità globale',
     reset_email_subject: 'Reimposta la Tua Password',
-    reset_email_body: 'Clicca sul link per reimpostare la tua password'
+    reset_email_body: 'Clicca sul link per reimpostare la tua password',
+    search_posts: 'Cerca post, autori...',
+    filters: 'Filtri',
+    clear_filters: 'Cancella',
+    author: 'Autore',
+    all_posts: 'Tutti',
+    my_posts: 'I Miei Post',
+    others_posts: 'Altri',
+    topics: 'Argomenti',
+    no_posts_found: 'Nessun post trovato con i filtri attuali.',
+    no_posts_yet: 'Ancora nessun post. Sii il primo a condividere qualcosa di ispirante!'
   },
   ja: {
     goya_communit: 'Goya Communit',
@@ -526,7 +596,17 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     welcome_email_subject: 'Goya Communitへようこそ',
     welcome_email_body: 'グローバルコミュニティへようこそ',
     reset_email_subject: 'パスワードをリセット',
-    reset_email_body: 'リンクをクリックしてパスワードをリセット'
+    reset_email_body: 'リンクをクリックしてパスワードをリセット',
+    search_posts: '投稿、著者を検索...',
+    filters: 'フィルター',
+    clear_filters: 'クリア',
+    author: '著者',
+    all_posts: 'すべて',
+    my_posts: '私の投稿',
+    others_posts: '他の人',
+    topics: 'トピック',
+    no_posts_found: '現在のフィルターでは投稿が見つかりません。',
+    no_posts_yet: 'まだ投稿がありません。最初にインスピレーションを与える投稿をしてください！'
   },
   ko: {
     goya_communit: 'Goya Communit',
@@ -590,7 +670,17 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     welcome_email_subject: 'Goya Communit에 오신 것을 환영합니다',
     welcome_email_body: '글로벌 커뮤니티에 오신 것을 환영합니다',
     reset_email_subject: '비밀번호 재설정',
-    reset_email_body: '링크를 클릭하여 비밀번호를 재설정하세요'
+    reset_email_body: '링크를 클릭하여 비밀번호를 재설정하세요',
+    search_posts: '게시물, 작성자 검색...',
+    filters: '필터',
+    clear_filters: '지우기',
+    author: '작성자',
+    all_posts: '모든 글',
+    my_posts: '내 게시물',
+    others_posts: '다른 사람',
+    topics: '주제',
+    no_posts_found: '현재 필터로는 게시물이 없습니다.',
+    no_posts_yet: '아직 게시물이 없습니다. 영감을 주는 첫 번째 게시물을 공유하세요!'
   },
   zh: {
     goya_communit: 'Goya Communit',
@@ -654,7 +744,17 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     welcome_email_subject: '欢迎来到Goya Communit',
     welcome_email_body: '欢迎加入我们的全球社区',
     reset_email_subject: '重置您的密码',
-    reset_email_body: '点击链接重置您的密码'
+    reset_email_body: '点击链接重置您的密码',
+    search_posts: '搜索帖子、作者...',
+    filters: '筛选',
+    clear_filters: '清除',
+    author: '作者',
+    all_posts: '全部',
+    my_posts: '我的帖子',
+    others_posts: '其他人',
+    topics: '话题',
+    no_posts_found: '没有找到符合当前筛选条件的帖子。',
+    no_posts_yet: '还没有帖子。成为第一个分享鼓舞人心内容的人！'
   },
   ar: {
     goya_communit: 'Goya Communit',
@@ -718,7 +818,17 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     welcome_email_subject: 'مرحباً بك في Goya Communit',
     welcome_email_body: 'مرحباً بك في مجتمعنا العالمي',
     reset_email_subject: 'إعادة تعيين كلمة المرور',
-    reset_email_body: 'انقر على الرابط لإعادة تعيين كلمة المرور'
+    reset_email_body: 'انقر على الرابط لإعادة تعيين كلمة المرور',
+    search_posts: 'البحث في المنشورات، المؤلفين...',
+    filters: 'المرشحات',
+    clear_filters: 'مسح',
+    author: 'المؤلف',
+    all_posts: 'الكل',
+    my_posts: 'منشوراتي',
+    others_posts: 'الآخرين',
+    topics: 'المواضيع',
+    no_posts_found: 'لم يتم العثور على منشورات بالمرشحات الحالية.',
+    no_posts_yet: 'لا توجد منشورات بعد. كن أول من يشارك شيئاً ملهماً!'
   },
   ru: {
     goya_communit: 'Goya Communit',
@@ -782,7 +892,17 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     welcome_email_subject: 'Добро пожаловать в Goya Communit',
     welcome_email_body: 'Добро пожаловать в наше глобальное сообщество',
     reset_email_subject: 'Сброс вашего пароля',
-    reset_email_body: 'Нажмите на ссылку для сброса пароля'
+    reset_email_body: 'Нажмите на ссылку для сброса пароля',
+    search_posts: 'Поиск постов, авторов...',
+    filters: 'Фильтры',
+    clear_filters: 'Очистить',
+    author: 'Автор',
+    all_posts: 'Все',
+    my_posts: 'Мои посты',
+    others_posts: 'Другие',
+    topics: 'Темы',
+    no_posts_found: 'Посты с текущими фильтрами не найдены.',
+    no_posts_yet: 'Пока нет постов. Будьте первым, кто поделится чем-то вдохновляющим!'
   },
   hi: {
     goya_communit: 'Goya Communit',
@@ -846,7 +966,17 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     welcome_email_subject: 'Goya Communit में आपका स्वागत है',
     welcome_email_body: 'हमारे वैश्विक समुदाय में आपका स्वागत है',
     reset_email_subject: 'अपना पासवर्ड रीसेट करें',
-    reset_email_body: 'अपना पासवर्ड रीसेट करने के लिए लिंक पर क्लिक करें'
+    reset_email_body: 'अपना पासवर्ड रीसेट करने के लिए लिंक पर क्लिक करें',
+    search_posts: 'पोस्ट, लेखक खोजें...',
+    filters: 'फ़िल्टर',
+    clear_filters: 'साफ़ करें',
+    author: 'लेखक',
+    all_posts: 'सभी',
+    my_posts: 'मेरी पोस्ट',
+    others_posts: 'अन्य',
+    topics: 'विषय',
+    no_posts_found: 'वर्तमान फ़िल्टर के साथ कोई पोस्ट नहीं मिली।',
+    no_posts_yet: 'अभी तक कोई पोस्ट नहीं है। कुछ प्रेरणादायक साझा करने वाले पहले व्यक्ति बनें!'
   }
 };
 
