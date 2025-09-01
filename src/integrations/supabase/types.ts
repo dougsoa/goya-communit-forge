@@ -98,6 +98,21 @@ export type Database = {
           },
         ]
       }
+      kv_store_173808cf: {
+        Row: {
+          key: string
+          value: Json
+        }
+        Insert: {
+          key: string
+          value: Json
+        }
+        Update: {
+          key?: string
+          value?: Json
+        }
+        Relationships: []
+      }
       likes: {
         Row: {
           created_at: string
