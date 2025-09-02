@@ -127,10 +127,10 @@ const PostCard = ({ post, onLike, onComment, onEdit, onDelete, currentUserId, is
           
           <div>
             <h4 className="font-semibold text-foreground">
-              {post.profiles.display_name || post.profiles.username}
+              {post.profiles.username}
             </h4>
             <p className="text-sm text-muted-foreground">
-              @{post.profiles.username} • {timeAgo}
+              {timeAgo}
             </p>
           </div>
         </div>

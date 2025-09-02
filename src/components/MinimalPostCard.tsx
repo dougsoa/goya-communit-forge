@@ -59,7 +59,7 @@ const MinimalPostCard = ({ post }: MinimalPostCardProps) => {
       {/* Author and Date - Secondary info */}
       <div className="flex items-center justify-between text-sm text-muted-foreground">
         <span className="font-medium">
-          {post.profiles.display_name || post.profiles.username}
+          {post.profiles.username}
         </span>
         <span>
           {timeAgo}

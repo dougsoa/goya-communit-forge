@@ -310,7 +310,7 @@ const PostDetail = () => {
                 {/* Author info */}
                 <div className="flex items-center text-sm text-muted-foreground">
                   <span className="font-medium">
-                    {post.profiles.display_name || post.profiles.username}
+                    {post.profiles.username}
                   </span>
                   <span className="mx-2">•</span>
                   <span>{timeAgo}</span>
@@ -357,8 +357,9 @@ const PostDetail = () => {
                   size="sm"
                   className={`flex items-center space-x-2 group ${
                     isLiked ? "text-red-500" : "text-muted-foreground"
-                  }`}
+                  } ${!user ? "opacity-50 cursor-not-allowed" : ""}`}
                   onClick={handleLike}
+                  disabled={!user}
                 >
                   <Heart 
                     className={`h-5 w-5 group-hover:scale-110 transition-smooth ${
@@ -403,11 +404,23 @@ const PostDetail = () => {
 
         {/* Comments section */}
         <div className="space-y-6">
-          {user && (
+          {user ? (
             <CreateComment 
               postId={post.id} 
               onCommentCreated={refreshComments}
             />
+          ) : (
+            <Card className="p-6 text-center">
+              <p className="text-muted-foreground mb-4">
+                {t('sign_in')} para comentar e curtir posts
+              </p>
+              <Button 
+                onClick={() => navigate('/auth')}
+                variant="outline"
+              >
+                {t('sign_in')}
+              </Button>
+            </Card>
           )}
           
           <CommentsList 

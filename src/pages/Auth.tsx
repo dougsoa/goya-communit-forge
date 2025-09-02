@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useLanguage } from "@/hooks/useLanguage";
-import { Globe, Mail, Lock, User, Eye, EyeOff } from "lucide-react";
+import { Globe, Mail, Lock, User, Eye, EyeOff, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const Auth = () => {
@@ -113,7 +113,17 @@ const Auth = () => {
 
   return (
     <div className="min-h-screen bg-gradient-subtle flex items-center justify-center p-4">
-      <Card className="w-full max-w-md p-8 bg-gradient-card shadow-medium">
+      <div className="w-full max-w-md">
+        <Button
+          variant="ghost"
+          onClick={() => navigate('/')}
+          className="mb-4"
+        >
+          <ArrowLeft className="h-4 w-4 mr-2" />
+          Voltar ao início
+        </Button>
+        
+        <Card className="w-full p-8 bg-gradient-card shadow-medium">
         <div className="text-center mb-8">
           <div className="h-12 w-12 rounded-lg bg-gradient-hero flex items-center justify-center mx-auto mb-4">
             <Globe className="h-6 w-6 text-primary-foreground" />
@@ -269,7 +279,8 @@ const Auth = () => {
             </>
           )}
         </div>
-      </Card>
+        </Card>
+      </div>
     </div>
   );
 };
