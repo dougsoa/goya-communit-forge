@@ -1,23 +1,6 @@
 import { Card } from "@/components/ui/card";
-import { useLanguage } from "@/hooks/useLanguage";
-import { formatDistanceToNow } from "date-fns";
-import { ptBR, enUS, es, fr, de, it, ja, ko, zhCN, ar, ru, hi } from "date-fns/locale";
 import { useNavigate } from "react-router-dom";
-
-const locales = {
-  pt: ptBR,
-  en: enUS,
-  es: es,
-  fr: fr,
-  de: de,
-  it: it,
-  ja: ja,
-  ko: ko,
-  zh: zhCN,
-  ar: ar,
-  ru: ru,
-  hi: hi,
-};
+import PostAuthor from "./PostAuthor";
 
 interface MinimalPostCardProps {
   post: {
@@ -33,14 +16,7 @@ interface MinimalPostCardProps {
 }
 
 const MinimalPostCard = ({ post }: MinimalPostCardProps) => {
-  const { language } = useLanguage();
   const navigate = useNavigate();
-
-  const locale = locales[language] || locales.en;
-  const timeAgo = formatDistanceToNow(new Date(post.created_at), {
-    addSuffix: true,
-    locale,
-  });
 
   const handleCardClick = () => {
     navigate(`/post/${post.id}`);
@@ -48,23 +24,21 @@ const MinimalPostCard = ({ post }: MinimalPostCardProps) => {
 
   return (
     <Card 
-      className="p-6 bg-gradient-card shadow-soft hover:shadow-medium transition-smooth border-primary/5 cursor-pointer"
+      className="p-6 bg-gradient-card shadow-soft hover:shadow-medium transition-all duration-300 border-primary/5 hover:border-primary/10 cursor-pointer group"
       onClick={handleCardClick}
     >
       {/* Title - Main focus */}
-      <h3 className="text-xl font-bold text-foreground leading-tight mb-3 hover:text-primary transition-smooth">
+      <h3 className="text-xl font-bold text-foreground leading-tight mb-4 group-hover:text-primary transition-colors">
         {post.title}
       </h3>
       
-      {/* Author and Date - Secondary info */}
-      <div className="flex items-center justify-between text-sm text-muted-foreground">
-        <span className="font-medium">
-          {post.profiles.username}
-        </span>
-        <span>
-          {timeAgo}
-        </span>
-      </div>
+      {/* Author and Date */}
+      <PostAuthor 
+        profiles={post.profiles}
+        createdAt={post.created_at}
+        size="sm"
+        showAvatar={false}
+      />
     </Card>
   );
 };

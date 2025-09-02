@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { User } from "@supabase/supabase-js";
 import MinimalPostCard from "./MinimalPostCard";
 import SearchAndFilters from "./SearchAndFilters";
+import PostGrid from "./PostGrid";
 import { useLanguage } from "@/hooks/useLanguage";
 
 interface Post {
@@ -158,9 +159,9 @@ const EnhancedPostList = ({ user }: EnhancedPostListProps) => {
 
   if (loading) {
     return (
-      <div className="space-y-4">
-        {[...Array(5)].map((_, i) => (
-          <div key={i} className="bg-card p-6 rounded-lg animate-pulse">
+      <PostGrid className="animate-pulse">
+        {[...Array(6)].map((_, i) => (
+          <div key={i} className="bg-card p-6 rounded-lg">
             <div className="space-y-3">
               <div className="h-6 bg-muted rounded w-3/4"></div>
               <div className="flex justify-between">
@@ -170,7 +171,7 @@ const EnhancedPostList = ({ user }: EnhancedPostListProps) => {
             </div>
           </div>
         ))}
-      </div>
+      </PostGrid>
     );
   }
 
@@ -197,14 +198,14 @@ const EnhancedPostList = ({ user }: EnhancedPostListProps) => {
           </p>
         </div>
       ) : (
-        <div className="space-y-4">
+        <PostGrid>
           {filteredPosts.map((post) => (
             <MinimalPostCard
               key={post.id}
               post={post}
             />
           ))}
-        </div>
+        </PostGrid>
       )}
     </div>
   );

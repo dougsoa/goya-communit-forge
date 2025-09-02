@@ -6,12 +6,11 @@ import { Card } from "@/components/ui/card";
 import { ArrowLeft, Heart, MessageCircle, Edit, Trash2, MoreVertical } from "lucide-react";
 import { useLanguage } from "@/hooks/useLanguage";
 import { useToast } from "@/hooks/use-toast";
-import { formatDistanceToNow } from "date-fns";
-import { ptBR, enUS, es, fr, de, it, ja, ko, zhCN, ar, ru, hi } from "date-fns/locale";
 import MDEditor from '@uiw/react-md-editor';
 import CommentsList from "@/components/CommentsList";
 import CreateComment from "@/components/CreateComment";
 import EditPost from "@/components/EditPost";
+import PostAuthor from "@/components/PostAuthor";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -29,20 +28,6 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
-const locales = {
-  pt: ptBR,
-  en: enUS,
-  es: es,
-  fr: fr,
-  de: de,
-  it: it,
-  ja: ja,
-  ko: ko,
-  zh: zhCN,
-  ar: ar,
-  ru: ru,
-  hi: hi,
-};
 
 interface Post {
   id: string;
@@ -72,8 +57,6 @@ const PostDetail = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-
-  const locale = locales[language] || locales.en;
 
   useEffect(() => {
     if (id) {
@@ -272,11 +255,6 @@ const PostDetail = () => {
     );
   }
 
-  const timeAgo = formatDistanceToNow(new Date(post.created_at), {
-    addSuffix: true,
-    locale,
-  });
-
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8 max-w-4xl">
@@ -299,22 +277,20 @@ const PostDetail = () => {
             onCancel={() => setIsEditing(false)}
           />
         ) : (
-          <Card className="p-8 mb-6">
+          <Card className="p-8 mb-6 bg-gradient-card shadow-medium">
             {/* Header with edit options */}
-            <div className="flex items-start justify-between mb-4">
-              <div>
-                <h1 className="text-3xl font-bold text-foreground mb-4 leading-tight">
+            <div className="flex items-start justify-between mb-6">
+              <div className="flex-1">
+                <h1 className="text-4xl font-bold text-foreground mb-6 leading-tight">
                   {post.title}
                 </h1>
                 
                 {/* Author info */}
-                <div className="flex items-center text-sm text-muted-foreground">
-                  <span className="font-medium">
-                    {post.profiles.username}
-                  </span>
-                  <span className="mx-2">•</span>
-                  <span>{timeAgo}</span>
-                </div>
+                <PostAuthor 
+                  profiles={post.profiles}
+                  createdAt={post.created_at}
+                  size="lg"
+                />
               </div>
 
               {/* Edit/Delete options for post owner */}
@@ -343,7 +319,7 @@ const PostDetail = () => {
             </div>
 
             {/* Content */}
-            <div className="prose prose-lg max-w-none mb-8 text-foreground [&_*]:text-foreground">
+            <div className="prose prose-xl max-w-none mb-8 text-foreground [&_*]:text-foreground">
               <MDEditor.Markdown 
                 source={post.content} 
                 style={{ backgroundColor: 'transparent', color: 'hsl(var(--foreground))' }}

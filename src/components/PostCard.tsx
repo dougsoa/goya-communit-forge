@@ -1,19 +1,9 @@
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Heart, MessageCircle, Share, MoreHorizontal, Edit, Trash2 } from "lucide-react";
 import { useLanguage } from "@/hooks/useLanguage";
-import { formatDistanceToNow } from "date-fns";
-import { ptBR, enUS, es, fr, de, it, ja, ko, zhCN, ar, ru, hi } from "date-fns/locale";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -26,21 +16,9 @@ import {
 } from "@/components/ui/alert-dialog";
 import MDEditor from '@uiw/react-md-editor';
 import '@uiw/react-markdown-preview/markdown.css';
+import PostAuthor from "./PostAuthor";
+import PostActions from "./PostActions";
 
-const locales = {
-  pt: ptBR,
-  en: enUS,
-  es: es,
-  fr: fr,
-  de: de,
-  it: it,
-  ja: ja,
-  ko: ko,
-  zh: zhCN,
-  ar: ar,
-  ru: ru,
-  hi: hi,
-};
 
 interface PostCardProps {
   post: {
@@ -66,17 +44,11 @@ interface PostCardProps {
 }
 
 const PostCard = ({ post, onLike, onComment, onEdit, onDelete, currentUserId, isLiked = false }: PostCardProps) => {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   const { toast } = useToast();
   const [showFullContent, setShowFullContent] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-
-  const locale = locales[language] || locales.en;
-  const timeAgo = formatDistanceToNow(new Date(post.created_at), {
-    addSuffix: true,
-    locale,
-  });
 
   const shouldTruncate = post.content.length > 300;
   const displayContent = shouldTruncate && !showFullContent 
@@ -114,71 +86,32 @@ const PostCard = ({ post, onLike, onComment, onEdit, onDelete, currentUserId, is
   };
 
   return (
-    <Card className="p-6 bg-gradient-card shadow-soft hover:shadow-medium transition-smooth border-primary/5">
+    <Card className="p-6 bg-gradient-card shadow-soft hover:shadow-medium transition-all duration-300 border-primary/5 hover:border-primary/10">
       {/* Header */}
       <div className="flex items-start justify-between mb-4">
-        <div className="flex items-center space-x-3">
-          <Avatar className="h-10 w-10">
-            <AvatarImage src={post.profiles.avatar_url} />
-            <AvatarFallback className="bg-primary text-primary-foreground">
-              {post.profiles.display_name?.charAt(0) || post.profiles.username?.charAt(0) || "?"}
-            </AvatarFallback>
-          </Avatar>
-          
-          <div>
-            <h4 className="font-semibold text-foreground">
-              {post.profiles.username}
-            </h4>
-            <p className="text-sm text-muted-foreground">
-              {timeAgo}
-            </p>
-          </div>
-        </div>
-
-        {isOwner ? (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="h-8 w-8">
-                <MoreHorizontal className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => onEdit?.(post)}>
-                <Edit className="h-4 w-4 mr-2" />
-                Editar
-              </DropdownMenuItem>
-              <DropdownMenuItem 
-                onClick={() => setShowDeleteDialog(true)}
-                className="text-destructive"
-              >
-                <Trash2 className="h-4 w-4 mr-2" />
-                Excluir
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        ) : (
-          <Button variant="ghost" size="icon" className="h-8 w-8">
-            <MoreHorizontal className="h-4 w-4" />
-          </Button>
-        )}
+        <PostAuthor 
+          profiles={post.profiles}
+          createdAt={post.created_at}
+          size="md"
+        />
       </div>
 
       {/* Content */}
-      <div className="space-y-3">
-        <h3 className="text-lg font-semibold text-foreground leading-tight">
+      <div className="space-y-4">
+        <h3 className="text-xl font-bold text-foreground leading-tight hover:text-primary transition-colors">
           {post.title}
         </h3>
         
-        <div className="text-muted-foreground leading-relaxed">
+        <div className="text-muted-foreground leading-relaxed prose prose-sm max-w-none">
           <MDEditor.Markdown 
             source={displayContent} 
-            style={{ whiteSpace: 'pre-wrap', backgroundColor: 'transparent' }}
+            style={{ whiteSpace: 'pre-wrap', backgroundColor: 'transparent', color: 'inherit' }}
           />
           
           {shouldTruncate && (
             <Button
               variant="link"
-              className="p-0 h-auto text-primary font-medium mt-2"
+              className="p-0 h-auto text-primary font-medium mt-2 hover:underline"
               onClick={() => setShowFullContent(!showFullContent)}
             >
               {showFullContent ? "Mostrar menos" : t('read_more')}
@@ -188,42 +121,16 @@ const PostCard = ({ post, onLike, onComment, onEdit, onDelete, currentUserId, is
       </div>
 
       {/* Actions */}
-      <div className="flex items-center justify-between mt-6 pt-4 border-t border-border">
-        <div className="flex items-center space-x-6">
-          <Button
-            variant="ghost"
-            size="sm"
-            className={`flex items-center space-x-2 group ${
-              isLiked ? "text-red-500" : "text-muted-foreground"
-            }`}
-            onClick={() => onLike(post.id)}
-          >
-            <Heart 
-              className={`h-4 w-4 group-hover:scale-110 transition-smooth ${
-                isLiked ? "fill-current" : ""
-              }`} 
-            />
-            <span className="text-sm font-medium">
-              {post.likes_count > 0 ? post.likes_count : ""}
-            </span>
-            <span className="text-sm">{isLiked ? "Curtido" : t('like')}</span>
-          </Button>
-
-          <Button
-            variant="ghost"
-            size="sm"
-            className="flex items-center space-x-2 text-muted-foreground group"
-            onClick={() => onComment(post.id)}
-          >
-            <MessageCircle className="h-4 w-4 group-hover:scale-110 transition-smooth" />
-            <span className="text-sm font-medium">
-              {post.comments_count > 0 && post.comments_count}
-            </span>
-            <span className="text-sm">{t('comment')}</span>
-          </Button>
-
-        </div>
-      </div>
+      <PostActions
+        likesCount={post.likes_count}
+        commentsCount={post.comments_count}
+        isLiked={isLiked}
+        isOwner={isOwner}
+        onLike={() => onLike(post.id)}
+        onComment={() => onComment(post.id)}
+        onEdit={() => onEdit?.(post)}
+        onDelete={() => setShowDeleteDialog(true)}
+      />
 
       {/* Delete Confirmation Dialog */}
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
