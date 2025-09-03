@@ -23,17 +23,17 @@ export const WelcomeEmail = ({
 }: WelcomeEmailProps) => (
   <Html>
     <Head />
-    <Preview>🎉 Bem-vindo(a) ao Goya Communit!</Preview>
+    <Preview>🎉 Bem-vindo(a) ao Goya Community!</Preview>
     <Body style={main}>
       <Container style={container}>
-        <Heading style={h1}>🌍 Bem-vindo(a) ao Goya Communit!</Heading>
+        <Heading style={h1}>🌍 Bem-vindo(a) ao Goya Community!</Heading>
         
         <Text style={text}>
           Olá <strong>{userName}</strong>,
         </Text>
         
         <Text style={text}>
-          Seja muito bem-vindo(a) à <strong>Goya Communit</strong>, uma comunidade global 
+          Seja muito bem-vindo(a) à <strong>Goya Community</strong>, uma comunidade global 
           para compartilhar ideias e criações que transformam a programação, a ciência, 
           a medicina, a biologia e muito mais.
         </Text>
@@ -53,12 +53,12 @@ export const WelcomeEmail = ({
             href={websiteUrl}
             style={button}
           >
-            👉 Entrar no Goya Communit
+            👉 Entrar no Goya Community
           </Button>
         </Section>
         
         <Text style={footer}>
-          — Equipe Goya Communit 🌍
+          — Equipe Goya Community 🌍
         </Text>
         
         <Text style={disclaimer}>

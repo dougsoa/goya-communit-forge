@@ -23,7 +23,7 @@ export const ResetPasswordEmail = ({
 }: ResetPasswordEmailProps) => (
   <Html>
     <Head />
-    <Preview>🔒 Recuperação de senha — Goya Communit</Preview>
+    <Preview>🔒 Recuperação de senha — Goya Community</Preview>
     <Body style={main}>
       <Container style={container}>
         <Heading style={h1}>🔒 Recuperação de Senha</Heading>
@@ -33,7 +33,7 @@ export const ResetPasswordEmail = ({
         </Text>
         
         <Text style={text}>
-          Recebemos um pedido para redefinir sua senha na <strong>Goya Communit</strong>.
+          Recebemos um pedido para redefinir sua senha na <strong>Goya Community</strong>.
         </Text>
         
         <Text style={text}>
@@ -69,7 +69,7 @@ export const ResetPasswordEmail = ({
         </Text>
         
         <Text style={footer}>
-          — Equipe Goya Communit 🌍
+          — Equipe Goya Community 🌍
         </Text>
         
         <Text style={disclaimer}>

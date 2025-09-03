@@ -889,7 +889,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     forgot_password: 'Забыли пароль',
     send_reset_email: 'Отправить письмо сброса',
     reset_email_sent: 'Письмо сброса отправлено',
-    welcome_email_subject: 'Добро пожаловать в Goya Communit',
+    welcome_email_subject: 'Добро пожаловать в Goya Community',
     welcome_email_body: 'Добро пожаловать в наше глобальное сообщество',
     reset_email_subject: 'Сброс вашего пароля',
     reset_email_body: 'Нажмите на ссылку для сброса пароля',
@@ -905,7 +905,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     no_posts_yet: 'Пока нет постов. Будьте первым, кто поделится чем-то вдохновляющим!'
   },
   hi: {
-    goya_communit: 'Goya Communit',
+    goya_communit: 'Goya Community',
     join: 'शामिल हों',
     sign_in: 'साइन इन',
     sign_up: 'साइन अप',
@@ -963,7 +963,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     forgot_password: 'पासवर्ड भूल गए',
     send_reset_email: 'रीसेट ईमेल भेजें',
     reset_email_sent: 'रीसेट ईमेल भेज दिया गया',
-    welcome_email_subject: 'Goya Communit में आपका स्वागत है',
+    welcome_email_subject: 'Goya Community में आपका स्वागत है',
     welcome_email_body: 'हमारे वैश्विक समुदाय में आपका स्वागत है',
     reset_email_subject: 'अपना पासवर्ड रीसेट करें',
     reset_email_body: 'अपना पासवर्ड रीसेट करने के लिए लिंक पर क्लिक करें',

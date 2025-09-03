@@ -36,9 +36,9 @@ const handler = async (req: Request): Promise<Response> => {
     );
 
     const emailResponse = await resend.emails.send({
-      from: "Goya Communit <onboarding@resend.dev>",
+      from: "Goya Community <onboarding@resend.dev>",
       to: [userEmail],
-      subject: "🎉 Welcome to Goya Communit!",
+      subject: "🎉 Welcome to Goya Community!",
       html: html,
     });
 
