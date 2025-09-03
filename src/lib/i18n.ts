@@ -683,7 +683,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     no_posts_yet: '아직 게시물이 없습니다. 영감을 주는 첫 번째 게시물을 공유하세요!'
   },
   zh: {
-    goya_communit: 'Goya Communit',
+    goya_communit: 'Goya Community',
     join: '加入',
     sign_in: '登录',
     sign_up: '注册',
@@ -757,7 +757,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     no_posts_yet: '还没有帖子。成为第一个分享鼓舞人心内容的人！'
   },
   ar: {
-    goya_communit: 'Goya Communit',
+    goya_communit: 'Goya Community',
     join: 'انضم',
     sign_in: 'تسجيل الدخول',
     sign_up: 'إنشاء حساب',
@@ -831,7 +831,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     no_posts_yet: 'لا توجد منشورات بعد. كن أول من يشارك شيئاً ملهماً!'
   },
   ru: {
-    goya_communit: 'Goya Communit',
+    goya_communit: 'Goya Community',
     join: 'Присоединиться',
     sign_in: 'Войти',
     sign_up: 'Регистрация',
