@@ -211,6 +211,30 @@ export type Database = {
         }
         Relationships: []
       }
+      user_comment_rate_limit: {
+        Row: {
+          comments_count: number
+          created_at: string
+          id: string
+          last_reset: string
+          user_id: string
+        }
+        Insert: {
+          comments_count?: number
+          created_at?: string
+          id?: string
+          last_reset?: string
+          user_id: string
+        }
+        Update: {
+          comments_count?: number
+          created_at?: string
+          id?: string
+          last_reset?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_post_rate_limit: {
         Row: {
           created_at: string
@@ -240,6 +264,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      check_comment_rate_limit: {
+        Args: { user_uuid: string }
+        Returns: boolean
+      }
       check_post_rate_limit: {
         Args: { user_uuid: string }
         Returns: boolean
@@ -256,6 +284,10 @@ export type Database = {
           user_id: string
           username: string
         }[]
+      }
+      sanitize_input: {
+        Args: { input_text: string }
+        Returns: string
       }
       validate_post_content: {
         Args: { content: string; title: string }
