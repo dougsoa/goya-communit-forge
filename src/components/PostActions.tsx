@@ -13,6 +13,7 @@ interface PostActionsProps {
   commentsCount: number;
   isLiked?: boolean;
   isOwner?: boolean;
+  isAuthenticated?: boolean;
   onLike: () => void;
   onComment: () => void;
   onEdit?: () => void;
@@ -25,6 +26,7 @@ const PostActions = ({
   commentsCount,
   isLiked = false,
   isOwner = false,
+  isAuthenticated = false,
   onLike,
   onComment,
   onEdit,
@@ -41,9 +43,9 @@ const PostActions = ({
           size="sm"
           className={`flex items-center space-x-2 group transition-all ${
             isLiked ? "text-red-500" : "text-muted-foreground"
-          } ${disabled ? "opacity-50 cursor-not-allowed" : "hover:text-red-500"}`}
-          onClick={onLike}
-          disabled={disabled}
+          } ${disabled || !isAuthenticated ? "opacity-50 cursor-not-allowed" : "hover:text-red-500"}`}
+          onClick={isAuthenticated ? onLike : undefined}
+          disabled={disabled || !isAuthenticated}
         >
           <Heart 
             className={`h-4 w-4 group-hover:scale-110 transition-transform ${
@@ -59,8 +61,11 @@ const PostActions = ({
         <Button
           variant="ghost"
           size="sm"
-          className="flex items-center space-x-2 text-muted-foreground group hover:text-primary transition-colors"
-          onClick={onComment}
+          className={`flex items-center space-x-2 text-muted-foreground group transition-colors ${
+            isAuthenticated ? "hover:text-primary" : "opacity-50 cursor-not-allowed"
+          }`}
+          onClick={isAuthenticated ? onComment : undefined}
+          disabled={!isAuthenticated}
         >
           <MessageCircle className="h-4 w-4 group-hover:scale-110 transition-transform" />
           <span className="text-sm font-medium">

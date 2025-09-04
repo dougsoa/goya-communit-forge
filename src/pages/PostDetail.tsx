@@ -334,8 +334,14 @@ const PostDetail = () => {
                   className={`flex items-center space-x-2 group ${
                     isLiked ? "text-red-500" : "text-muted-foreground"
                   } ${!user ? "opacity-50 cursor-not-allowed" : ""}`}
-                  onClick={handleLike}
-                  disabled={!user}
+                  onClick={user ? handleLike : () => {
+                    toast({
+                      title: t('login_to_like'),
+                      description: "Faça login para curtir posts",
+                      variant: "destructive",
+                    });
+                  }}
+                  disabled={false}
                 >
                   <Heart 
                     className={`h-5 w-5 group-hover:scale-110 transition-smooth ${
@@ -388,7 +394,7 @@ const PostDetail = () => {
           ) : (
             <Card className="p-6 text-center">
               <p className="text-muted-foreground mb-4">
-                {t('sign_in')} para comentar e curtir posts
+                {t('login_to_comment')}
               </p>
               <Button 
                 onClick={() => navigate('/auth')}
