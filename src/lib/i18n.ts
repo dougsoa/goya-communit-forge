@@ -91,7 +91,7 @@ type TranslationKey =
 
 export const translations: Record<Language, Record<TranslationKey, string>> = {
   pt: {
-    goya_communit: 'Goya Communit',
+    goya_communit: 'Goya Community',
     join: 'Participar',
     sign_in: 'Entrar',
     sign_up: 'Cadastrar',
@@ -149,7 +149,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     forgot_password: 'Esqueci a Senha',
     send_reset_email: 'Enviar Email de Redefinição',
     reset_email_sent: 'Email de redefinição enviado',
-    welcome_email_subject: 'Bem-vindo ao Goya Communit',
+    welcome_email_subject: 'Bem-vindo ao Goya Community',
     welcome_email_body: 'Seja bem-vindo à nossa comunidade global',
     reset_email_subject: 'Redefinir sua Senha',
     reset_email_body: 'Clique no link para redefinir sua senha',
@@ -165,7 +165,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     no_posts_yet: 'Ainda não há posts. Seja o primeiro a compartilhar algo inspirador!'
   },
   en: {
-    goya_communit: 'Goya Communit',
+    goya_communit: 'Goya Community',
     join: 'Join',
     sign_in: 'Sign In',
     sign_up: 'Sign Up',
@@ -223,7 +223,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     forgot_password: 'Forgot Password',
     send_reset_email: 'Send Reset Email',
     reset_email_sent: 'Reset email sent',
-    welcome_email_subject: 'Welcome to Goya Communit',
+    welcome_email_subject: 'Welcome to Goya Community',
     welcome_email_body: 'Welcome to our global community',
     reset_email_subject: 'Reset Your Password',
     reset_email_body: 'Click the link to reset your password',
@@ -239,7 +239,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     no_posts_yet: 'No posts yet. Be the first to share something inspiring!'
   },
   es: {
-    goya_communit: 'Goya Communit',
+    goya_communit: 'Goya Community',
     join: 'Unirse',
     sign_in: 'Iniciar Sesión',
     sign_up: 'Registrarse',
@@ -297,7 +297,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     forgot_password: 'Olvidé mi Contraseña',
     send_reset_email: 'Enviar Email de Restablecimiento',
     reset_email_sent: 'Email de restablecimiento enviado',
-    welcome_email_subject: 'Bienvenido a Goya Communit',
+    welcome_email_subject: 'Bienvenido a Goya Community',
     welcome_email_body: 'Bienvenido a nuestra comunidad global',
     reset_email_subject: 'Restablecer tu Contraseña',
     reset_email_body: 'Haz clic en el enlace para restablecer tu contraseña',
@@ -313,7 +313,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     no_posts_yet: '¡Aún no hay posts. Sé el primero en compartir algo inspirador!'
   },
   fr: {
-    goya_communit: 'Goya Communit',
+    goya_communit: 'Goya Community',
     join: 'Rejoindre',
     sign_in: 'Se connecter',
     sign_up: 'S\'inscrire',
@@ -371,7 +371,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     forgot_password: 'Mot de Passe Oublié',
     send_reset_email: 'Envoyer Email de Réinitialisation',
     reset_email_sent: 'Email de réinitialisation envoyé',
-    welcome_email_subject: 'Bienvenue sur Goya Communit',
+    welcome_email_subject: 'Bienvenue sur Goya Community',
     welcome_email_body: 'Bienvenue dans notre communauté mondiale',
     reset_email_subject: 'Réinitialiser Votre Mot de Passe',
     reset_email_body: 'Cliquez sur le lien pour réinitialiser votre mot de passe',
@@ -387,7 +387,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     no_posts_yet: 'Pas encore de posts. Soyez le premier à partager quelque chose d\'inspirant!'
   },
   de: {
-    goya_communit: 'Goya Communit',
+    goya_communit: 'Goya Community',
     join: 'Beitreten',
     sign_in: 'Anmelden',
     sign_up: 'Registrieren',
@@ -445,7 +445,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     forgot_password: 'Passwort Vergessen',
     send_reset_email: 'Reset-E-Mail Senden',
     reset_email_sent: 'Reset-E-Mail gesendet',
-    welcome_email_subject: 'Willkommen bei Goya Communit',
+    welcome_email_subject: 'Willkommen bei Goya Community',
     welcome_email_body: 'Willkommen in unserer globalen Gemeinschaft',
     reset_email_subject: 'Ihr Passwort Zurücksetzen',
     reset_email_body: 'Klicken Sie auf den Link, um Ihr Passwort zurückzusetzen',
@@ -461,7 +461,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     no_posts_yet: 'Noch keine Posts. Seien Sie der Erste, der etwas Inspirierendes teilt!'
   },
   it: {
-    goya_communit: 'Goya Communit',
+    goya_communit: 'Goya Community',
     join: 'Unisciti',
     sign_in: 'Accedi',
     sign_up: 'Registrati',
@@ -519,7 +519,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     forgot_password: 'Password Dimenticata',
     send_reset_email: 'Invia Email di Reset',
     reset_email_sent: 'Email di reset inviata',
-    welcome_email_subject: 'Benvenuto su Goya Communit',
+    welcome_email_subject: 'Benvenuto su Goya Community',
     welcome_email_body: 'Benvenuto nella nostra comunità globale',
     reset_email_subject: 'Reimposta la Tua Password',
     reset_email_body: 'Clicca sul link per reimpostare la tua password',
@@ -535,7 +535,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     no_posts_yet: 'Ancora nessun post. Sii il primo a condividere qualcosa di ispirante!'
   },
   ja: {
-    goya_communit: 'Goya Communit',
+    goya_communit: 'Goya Community',
     join: '参加',
     sign_in: 'サインイン',
     sign_up: 'サインアップ',
@@ -593,7 +593,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     forgot_password: 'パスワードを忘れた',
     send_reset_email: 'リセットメールを送信',
     reset_email_sent: 'リセットメールが送信されました',
-    welcome_email_subject: 'Goya Communitへようこそ',
+    welcome_email_subject: 'Goya Communityへようこそ',
     welcome_email_body: 'グローバルコミュニティへようこそ',
     reset_email_subject: 'パスワードをリセット',
     reset_email_body: 'リンクをクリックしてパスワードをリセット',
@@ -609,7 +609,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     no_posts_yet: 'まだ投稿がありません。最初にインスピレーションを与える投稿をしてください！'
   },
   ko: {
-    goya_communit: 'Goya Communit',
+    goya_communit: 'Goya Community',
     join: '참여',
     sign_in: '로그인',
     sign_up: '회원가입',
@@ -667,7 +667,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     forgot_password: '비밀번호를 잊으셨나요',
     send_reset_email: '재설정 이메일 보내기',
     reset_email_sent: '재설정 이메일이 전송되었습니다',
-    welcome_email_subject: 'Goya Communit에 오신 것을 환영합니다',
+    welcome_email_subject: 'Goya Community에 오신 것을 환영합니다',
     welcome_email_body: '글로벌 커뮤니티에 오신 것을 환영합니다',
     reset_email_subject: '비밀번호 재설정',
     reset_email_body: '링크를 클릭하여 비밀번호를 재설정하세요',
@@ -741,7 +741,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     forgot_password: '忘记密码',
     send_reset_email: '发送重置邮件',
     reset_email_sent: '重置邮件已发送',
-    welcome_email_subject: '欢迎来到Goya Communit',
+    welcome_email_subject: '欢迎来到Goya Community',
     welcome_email_body: '欢迎加入我们的全球社区',
     reset_email_subject: '重置您的密码',
     reset_email_body: '点击链接重置您的密码',
@@ -815,7 +815,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     forgot_password: 'نسيت كلمة المرور',
     send_reset_email: 'إرسال بريد إعادة التعيين',
     reset_email_sent: 'تم إرسال بريد إعادة التعيين',
-    welcome_email_subject: 'مرحباً بك في Goya Communit',
+    welcome_email_subject: 'مرحباً بك في Goya Community',
     welcome_email_body: 'مرحباً بك في مجتمعنا العالمي',
     reset_email_subject: 'إعادة تعيين كلمة المرور',
     reset_email_body: 'انقر على الرابط لإعادة تعيين كلمة المرور',
