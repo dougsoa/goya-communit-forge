@@ -160,12 +160,12 @@ const UserProfile = () => {
       <div className="max-w-2xl mx-auto">
         <div className="flex items-center mb-6">
           <Button
-            variant="ghost"
+            variant="outline"
             size="icon"
             onClick={() => navigate("/")}
-            className="mr-3"
+            className="group mr-3 bg-background/80 backdrop-blur-sm border-border/50 hover:bg-accent/50 transition-all duration-300 hover:scale-105 hover:shadow-md"
           >
-            <ArrowLeft className="h-4 w-4" />
+            <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform duration-300" />
           </Button>
           <h1 className="text-2xl font-bold text-foreground">User Profile</h1>
         </div>

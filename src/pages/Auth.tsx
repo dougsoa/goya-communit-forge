@@ -115,11 +115,11 @@ const Auth = () => {
     <div className="min-h-screen bg-gradient-subtle flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <Button
-          variant="ghost"
+          variant="outline"
           onClick={() => navigate('/')}
-          className="mb-4"
+          className="group mb-4 bg-background/80 backdrop-blur-sm border-border/50 hover:bg-accent/50 transition-all duration-300 hover:scale-105 hover:shadow-md"
         >
-          <ArrowLeft className="h-4 w-4 mr-2" />
+          <ArrowLeft className="h-4 w-4 mr-2 group-hover:-translate-x-1 transition-transform duration-300" />
           Voltar ao início
         </Button>
         
