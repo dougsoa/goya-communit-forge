@@ -243,7 +243,6 @@ const PostDetail = () => {
             onClick={() => navigate('/')}
             className="group mb-6 bg-background/80 backdrop-blur-sm border-border/50 hover:bg-accent/50 transition-all duration-300 hover:scale-105 hover:shadow-md"
           >
-            <ArrowLeft className="h-4 w-4 mr-2 group-hover:-translate-x-1 transition-transform duration-300" />
             {t('back_to_feed')}
           </Button>
           <Card className="p-8 text-center">
@@ -264,7 +263,6 @@ const PostDetail = () => {
           onClick={() => navigate('/')}
           className="group mb-6 bg-background/80 backdrop-blur-sm border-border/50 hover:bg-accent/50 transition-all duration-300 hover:scale-105 hover:shadow-md"
         >
-          <ArrowLeft className="h-4 w-4 mr-2 group-hover:-translate-x-1 transition-transform duration-300" />
           {t('back_to_feed')}
         </Button>
 
