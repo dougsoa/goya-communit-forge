@@ -164,60 +164,67 @@ const UserProfile = () => {
             onClick={() => navigate("/")}
             className="group mr-3 bg-background/80 backdrop-blur-sm border-border/50 hover:bg-accent/50 transition-all duration-300 hover:scale-105 hover:shadow-md"
           >
-            Voltar
+            {t('back')}
           </Button>
-          <h1 className="text-2xl font-bold text-foreground">User Profile</h1>
+          <h1 className="text-2xl font-bold text-foreground">{t('user_profile')}</h1>
         </div>
 
-        <Card className="p-6 bg-gradient-card shadow-medium mb-6">
-          <div className="flex items-center space-x-4 mb-6">
-            <Avatar className="h-16 w-16">
-              <AvatarImage src={profile?.avatar_url} />
-              <AvatarFallback className="bg-primary text-primary-foreground text-lg">
-                {profile?.display_name?.charAt(0) || profile?.username?.charAt(0) || user.email?.charAt(0) || "?"}
-              </AvatarFallback>
-            </Avatar>
+        <Card className="p-8 bg-gradient-card shadow-elegant border-primary/10 mb-8 backdrop-blur-sm">
+          <div className="flex items-center space-x-6 mb-8">
+            <div className="relative">
+              <Avatar className="h-20 w-20 ring-4 ring-primary/20 ring-offset-4 ring-offset-background">
+                <AvatarImage src={profile?.avatar_url} />
+                <AvatarFallback className="bg-gradient-primary text-primary-foreground text-2xl font-bold">
+                  {profile?.display_name?.charAt(0) || profile?.username?.charAt(0) || user.email?.charAt(0) || "?"}
+                </AvatarFallback>
+              </Avatar>
+              <div className="absolute -bottom-1 -right-1 h-6 w-6 bg-green-500 rounded-full border-2 border-background"></div>
+            </div>
             
-            <div>
-              <h2 className="text-xl font-semibold text-foreground">
+            <div className="flex-1">
+              <h2 className="text-2xl font-bold text-foreground mb-1">
                 {profile?.display_name || profile?.username || "User"}
               </h2>
-              <p className="text-muted-foreground">@{profile?.username || "username"}</p>
+              <p className="text-muted-foreground text-lg">@{profile?.username || "username"}</p>
+              <div className="flex items-center mt-2 text-sm text-muted-foreground">
+                <div className="h-2 w-2 bg-green-500 rounded-full mr-2"></div>
+                Online
+              </div>
             </div>
           </div>
 
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-foreground mb-2">
-                Email
+          <div className="space-y-6">
+            <div className="space-y-2">
+              <label className="text-sm font-semibold text-foreground">
+                {t('email')}
               </label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+              <div className="relative group">
+                <Mail className="absolute left-4 top-4 h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
                 <Input
                   type="email"
                   value={user.email || ""}
                   disabled
-                  className="pl-10 bg-muted"
+                  className="pl-12 h-14 bg-gradient-subtle border-border/50 text-lg disabled:opacity-80"
                 />
               </div>
-              <p className="text-xs text-muted-foreground mt-1">
-                Email cannot be changed
+              <p className="text-sm text-muted-foreground">
+                {t('email_cannot_change')}
               </p>
             </div>
 
-            <form onSubmit={handleUpdateUsername} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  Username
+            <form onSubmit={handleUpdateUsername} className="space-y-6">
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-foreground">
+                  {t('username')}
                 </label>
-                <div className="relative">
-                  <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                <div className="relative group">
+                  <User className="absolute left-4 top-4 h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
                   <Input
                     type="text"
                     placeholder="Enter your username"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    className="pl-10"
+                    className="pl-12 h-14 bg-gradient-subtle border-border/50 text-lg focus:border-primary/50 transition-all"
                     required
                   />
                 </div>
@@ -227,35 +234,36 @@ const UserProfile = () => {
                 type="submit"
                 variant="hero"
                 disabled={loading || !username.trim() || username === profile?.username}
-                className="w-full"
+                className="w-full h-12 text-lg font-semibold shadow-medium hover:shadow-elegant transition-all duration-300"
               >
-                <Save className="h-4 w-4 mr-2" />
-                {loading ? "Updating..." : "Update Username"}
+                <Save className="h-5 w-5 mr-2" />
+                {loading ? t('updating') : t('update_username')}
               </Button>
             </form>
           </div>
         </Card>
 
-        <Card className="p-6 bg-gradient-card shadow-medium border-destructive/20">
-          <h3 className="text-lg font-semibold text-foreground mb-4">Danger Zone</h3>
-          <p className="text-muted-foreground mb-4">
-            Once you delete your account, there is no going back. This will permanently delete your account and all your data.
+        <Card className="p-8 bg-gradient-card shadow-elegant border-destructive/30 backdrop-blur-sm">
+          <div className="flex items-center mb-4">
+            <div className="h-2 w-2 bg-destructive rounded-full mr-3 animate-pulse"></div>
+            <h3 className="text-xl font-bold text-foreground">{t('danger_zone')}</h3>
+          </div>
+          <p className="text-muted-foreground mb-6 text-lg leading-relaxed">
+            {t('delete_account_warning')}
           </p>
           
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <Button variant="destructive" className="w-full">
-                <Trash2 className="h-4 w-4 mr-2" />
-                Delete Account
+              <Button variant="destructive" className="w-full h-12 text-lg font-semibold shadow-medium hover:shadow-elegant transition-all duration-300">
+                <Trash2 className="h-5 w-5 mr-2" />
+                {t('delete_account')}
               </Button>
             </AlertDialogTrigger>
-            <AlertDialogContent>
+            <AlertDialogContent className="bg-gradient-card border-destructive/30">
               <AlertDialogHeader>
-                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                <AlertDialogDescription>
-                  This action cannot be undone. This will permanently delete your account
-                  and remove all your data from our servers, including all your posts, 
-                  comments, and likes.
+                <AlertDialogTitle className="text-xl font-bold">{t('delete_confirmation_title')}</AlertDialogTitle>
+                <AlertDialogDescription className="text-lg leading-relaxed">
+                  {t('delete_confirmation_description')}
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
@@ -263,9 +271,9 @@ const UserProfile = () => {
                 <AlertDialogAction
                   onClick={handleDeleteAccount}
                   disabled={deleteLoading}
-                  className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                  className="bg-destructive text-destructive-foreground hover:bg-destructive/90 h-12 text-lg font-semibold"
                 >
-                  {deleteLoading ? "Deleting..." : "Yes, delete my account"}
+                  {deleteLoading ? t('deleting') : t('yes_delete_account')}
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>

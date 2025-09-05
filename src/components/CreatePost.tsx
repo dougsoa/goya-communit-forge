@@ -114,108 +114,121 @@ const CreatePost = ({ userProfile, onPostCreated }: CreatePostProps) => {
 
   if (!isExpanded) {
     return (
-      <Card className="p-4 bg-gradient-card shadow-soft border-primary/5 mb-6">
-        <div className="flex items-center space-x-3">
-          <Avatar className="h-10 w-10">
-            <AvatarImage src={userProfile?.avatar_url} />
-            <AvatarFallback className="bg-primary text-primary-foreground">
-              {userProfile?.display_name?.charAt(0) || userProfile?.username?.charAt(0) || "?"}
-            </AvatarFallback>
-          </Avatar>
+      <Card className="p-6 bg-gradient-card shadow-elegant border-primary/10 mb-8 backdrop-blur-sm">
+        <div className="flex items-center space-x-4">
+          <div className="relative">
+            <Avatar className="h-12 w-12 ring-2 ring-primary/20 ring-offset-2 ring-offset-background">
+              <AvatarImage src={userProfile?.avatar_url} />
+              <AvatarFallback className="bg-gradient-primary text-primary-foreground font-semibold">
+                {userProfile?.display_name?.charAt(0) || userProfile?.username?.charAt(0) || "?"}
+              </AvatarFallback>
+            </Avatar>
+            <div className="absolute -bottom-1 -right-1 h-4 w-4 bg-green-500 rounded-full border-2 border-background"></div>
+          </div>
           
           <button
             onClick={() => setIsExpanded(true)}
-            className="flex-1 text-left p-3 rounded-full bg-muted hover:bg-muted/80 transition-smooth text-muted-foreground"
+            className="flex-1 text-left p-4 rounded-2xl bg-gradient-subtle hover:bg-gradient-card transition-all duration-300 text-muted-foreground hover:text-foreground border border-border/50 hover:border-primary/30 hover:shadow-medium"
           >
-            {t('post_something')}
+            <span className="text-lg">{t('post_something')}</span>
           </button>
 
           <Button 
-            variant="community" 
+            variant="hero" 
             size="icon"
             onClick={() => setIsExpanded(true)}
             aria-label={t('create_post')}
+            className="h-12 w-12 rounded-xl shadow-medium hover:shadow-elegant transition-all duration-300"
           >
-            <Plus className="h-4 w-4" />
+            <Plus className="h-5 w-5" />
           </Button>
         </div>
       </Card>
     );
   }
 
-  return (
-    <Card className="p-6 bg-gradient-card shadow-medium border-primary/5 mb-6">
-      <div className="flex items-start justify-between mb-4">
-        <div className="flex items-center space-x-3">
-          <Avatar className="h-10 w-10">
-            <AvatarImage src={userProfile?.avatar_url} />
-            <AvatarFallback className="bg-primary text-primary-foreground">
-              {userProfile?.display_name?.charAt(0) || userProfile?.username?.charAt(0) || "?"}
-            </AvatarFallback>
-          </Avatar>
-          
-          <div>
-            <h4 className="font-semibold text-foreground">
-              {userProfile?.display_name || userProfile?.username || "Anonymous"}
-            </h4>
-            <p className="text-sm text-muted-foreground">
-              {t('share_ideas')}
-            </p>
+    return (
+      <Card className="p-8 bg-gradient-card shadow-elegant border-primary/10 mb-8 backdrop-blur-sm">
+        <div className="flex items-start justify-between mb-6">
+          <div className="flex items-center space-x-4">
+            <div className="relative">
+              <Avatar className="h-12 w-12 ring-2 ring-primary/20 ring-offset-2 ring-offset-background">
+                <AvatarImage src={userProfile?.avatar_url} />
+                <AvatarFallback className="bg-gradient-primary text-primary-foreground font-semibold">
+                  {userProfile?.display_name?.charAt(0) || userProfile?.username?.charAt(0) || "?"}
+                </AvatarFallback>
+              </Avatar>
+              <div className="absolute -bottom-1 -right-1 h-4 w-4 bg-green-500 rounded-full border-2 border-background"></div>
+            </div>
+            
+            <div>
+              <h4 className="font-bold text-foreground text-lg">
+                {userProfile?.display_name || userProfile?.username || "Anonymous"}
+              </h4>
+              <p className="text-muted-foreground">
+                {t('share_ideas')}
+              </p>
+            </div>
           </div>
-        </div>
 
-        <Button 
-          variant="ghost" 
-          size="icon"
-          onClick={() => {
-            setIsExpanded(false);
-            setTitle("");
-            setContent("");
-          }}
-          className="h-8 w-8"
-        >
-          <X className="h-4 w-4" />
-        </Button>
-      </div>
-
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <Input
-          placeholder={t('title_placeholder')}
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className="text-lg font-medium border-none bg-transparent p-0 focus-visible:ring-0"
-          required
-        />
-
-        <RichTextEditor
-          value={content}
-          onChange={setContent}
-          placeholder={t('content_placeholder')}
-          className="min-h-32 border-none bg-transparent p-0 resize-none focus-visible:ring-0"
-        />
-
-        <div className="flex justify-end space-x-3 pt-4 border-t border-border">
-          <Button
-            type="button"
-            variant="ghost"
+          <Button 
+            variant="ghost" 
+            size="icon"
             onClick={() => {
               setIsExpanded(false);
               setTitle("");
               setContent("");
             }}
+            className="h-10 w-10 rounded-xl hover:bg-muted/50 transition-all duration-300"
           >
-            {t('cancel')}
-          </Button>
-          
-          <Button
-            type="submit"
-            variant="hero"
-            disabled={loading || !title.trim() || !content.trim()}
-          >
-            {loading ? "..." : t('publish')}
+            <X className="h-5 w-5" />
           </Button>
         </div>
-      </form>
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="space-y-2">
+            <Input
+              placeholder={t('title_placeholder')}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className="text-xl font-bold border-none bg-gradient-subtle rounded-xl p-4 h-14 focus-visible:ring-2 focus-visible:ring-primary/50 transition-all"
+              required
+            />
+          </div>
+
+          <div className="space-y-2">
+            <RichTextEditor
+              value={content}
+              onChange={setContent}
+              placeholder={t('content_placeholder')}
+              className="min-h-40 border-none bg-gradient-subtle rounded-xl p-4 resize-none focus-visible:ring-2 focus-visible:ring-primary/50 transition-all text-lg"
+            />
+          </div>
+
+          <div className="flex justify-end space-x-4 pt-6 border-t border-border/50">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => {
+                setIsExpanded(false);
+                setTitle("");
+                setContent("");
+              }}
+              className="h-12 px-6 text-lg font-semibold rounded-xl transition-all duration-300 hover:shadow-medium"
+            >
+              {t('cancel')}
+            </Button>
+            
+            <Button
+              type="submit"
+              variant="hero"
+              disabled={loading || !title.trim() || !content.trim()}
+              className="h-12 px-8 text-lg font-semibold rounded-xl shadow-medium hover:shadow-elegant transition-all duration-300"
+            >
+              {loading ? "..." : t('publish')}
+            </Button>
+          </div>
+        </form>
     </Card>
   );
 };

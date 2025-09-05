@@ -91,7 +91,19 @@ type TranslationKey =
   | 'login_to_comment'
   | 'login_to_like'
   | 'no_comments_yet'
-  | 'comments_title';
+  | 'comments_title'
+  | 'user_profile'
+  | 'back'
+  | 'update_username'
+  | 'updating'
+  | 'email_cannot_change'
+  | 'danger_zone'
+  | 'delete_account'
+  | 'delete_account_warning'
+  | 'delete_confirmation_title'
+  | 'delete_confirmation_description'
+  | 'deleting'
+  | 'yes_delete_account';
 
 export const translations: Record<Language, Record<TranslationKey, string>> = {
   pt: {
@@ -170,7 +182,19 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     login_to_comment: 'Faça login para comentar',
     login_to_like: 'Faça login para curtir',
     no_comments_yet: 'Nenhum comentário ainda. Seja o primeiro a comentar!',
-    comments_title: 'Comentários'
+    comments_title: 'Comentários',
+    user_profile: 'Perfil do Usuário',
+    back: 'Voltar',
+    update_username: 'Atualizar Nome de Usuário',
+    updating: 'Atualizando...',
+    email_cannot_change: 'O email não pode ser alterado',
+    danger_zone: 'Zona de Perigo',
+    delete_account: 'Excluir Conta',
+    delete_account_warning: 'Depois de excluir sua conta, não há como voltar atrás. Isso excluirá permanentemente sua conta e todos os seus dados.',
+    delete_confirmation_title: 'Tem certeza absoluta?',
+    delete_confirmation_description: 'Esta ação não pode ser desfeita. Isso excluirá permanentemente sua conta e removerá todos os seus dados de nossos servidores, incluindo todos os seus posts, comentários e curtidas.',
+    deleting: 'Excluindo...',
+    yes_delete_account: 'Sim, excluir minha conta'
   },
   en: {
     goya_communit: 'Goya Community',
@@ -248,7 +272,19 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     login_to_comment: 'Please log in to comment',
     login_to_like: 'Please log in to like',
     no_comments_yet: 'No comments yet. Be the first to comment!',
-    comments_title: 'Comments'
+    comments_title: 'Comments',
+    user_profile: 'User Profile',
+    back: 'Back',
+    update_username: 'Update Username',
+    updating: 'Updating...',
+    email_cannot_change: 'Email cannot be changed',
+    danger_zone: 'Danger Zone',
+    delete_account: 'Delete Account',
+    delete_account_warning: 'Once you delete your account, there is no going back. This will permanently delete your account and all your data.',
+    delete_confirmation_title: 'Are you absolutely sure?',
+    delete_confirmation_description: 'This action cannot be undone. This will permanently delete your account and remove all your data from our servers, including all your posts, comments, and likes.',
+    deleting: 'Deleting...',
+    yes_delete_account: 'Yes, delete my account'
   },
   es: {
     goya_communit: 'Goya Community',
@@ -326,7 +362,19 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     login_to_comment: 'Inicia sesión para comentar',
     login_to_like: 'Inicia sesión para dar me gusta',
     no_comments_yet: '¡Aún no hay comentarios. Sé el primero en comentar!',
-    comments_title: 'Comentarios'
+    comments_title: 'Comentarios',
+    user_profile: 'Perfil del Usuario',
+    back: 'Volver',
+    update_username: 'Actualizar Nombre de Usuario',
+    updating: 'Actualizando...',
+    email_cannot_change: 'El email no se puede cambiar',
+    danger_zone: 'Zona de Peligro',
+    delete_account: 'Eliminar Cuenta',
+    delete_account_warning: 'Una vez que elimines tu cuenta, no hay vuelta atrás. Esto eliminará permanentemente tu cuenta y todos tus datos.',
+    delete_confirmation_title: '¿Estás absolutamente seguro?',
+    delete_confirmation_description: 'Esta acción no se puede deshacer. Esto eliminará permanentemente tu cuenta y removerá todos tus datos de nuestros servidores, incluyendo todos tus posts, comentarios y me gusta.',
+    deleting: 'Eliminando...',
+    yes_delete_account: 'Sí, eliminar mi cuenta'
   },
   fr: {
     goya_communit: 'Goya Community',
@@ -404,7 +452,19 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     login_to_comment: 'Connectez-vous pour commenter',
     login_to_like: 'Connectez-vous pour aimer',
     no_comments_yet: 'Aucun commentaire pour le moment. Soyez le premier à commenter!',
-    comments_title: 'Commentaires'
+    comments_title: 'Commentaires',
+    user_profile: 'Profil Utilisateur',
+    back: 'Retour',
+    update_username: 'Mettre à jour le nom d\'utilisateur',
+    updating: 'Mise à jour...',
+    email_cannot_change: 'L\'email ne peut pas être modifié',
+    danger_zone: 'Zone de Danger',
+    delete_account: 'Supprimer le Compte',
+    delete_account_warning: 'Une fois que vous supprimez votre compte, il n\'y a pas de retour en arrière. Cela supprimera définitivement votre compte et toutes vos données.',
+    delete_confirmation_title: 'Êtes-vous absolument sûr?',
+    delete_confirmation_description: 'Cette action ne peut pas être annulée. Cela supprimera définitivement votre compte et supprimera toutes vos données de nos serveurs, y compris tous vos posts, commentaires et j\'aime.',
+    deleting: 'Suppression...',
+    yes_delete_account: 'Oui, supprimer mon compte'
   },
   de: {
     goya_communit: 'Goya Community',
@@ -482,7 +542,19 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     login_to_comment: 'Anmelden um zu kommentieren',
     login_to_like: 'Anmelden um zu liken',
     no_comments_yet: 'Noch keine Kommentare. Seien Sie der Erste, der kommentiert!',
-    comments_title: 'Kommentare'
+    comments_title: 'Kommentare',
+    user_profile: 'Benutzerprofil',
+    back: 'Zurück',
+    update_username: 'Benutzernamen aktualisieren',
+    updating: 'Aktualisierung...',
+    email_cannot_change: 'E-Mail kann nicht geändert werden',
+    danger_zone: 'Gefahrenzone',
+    delete_account: 'Konto löschen',
+    delete_account_warning: 'Sobald Sie Ihr Konto löschen, gibt es kein Zurück mehr. Dies wird Ihr Konto und alle Ihre Daten dauerhaft löschen.',
+    delete_confirmation_title: 'Sind Sie absolut sicher?',
+    delete_confirmation_description: 'Diese Aktion kann nicht rückgängig gemacht werden. Dies wird Ihr Konto dauerhaft löschen und alle Ihre Daten von unseren Servern entfernen, einschließlich aller Ihrer Posts, Kommentare und Likes.',
+    deleting: 'Löschen...',
+    yes_delete_account: 'Ja, mein Konto löschen'
   },
   it: {
     goya_communit: 'Goya Community',
@@ -560,7 +632,19 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     login_to_comment: 'Accedi per commentare',
     login_to_like: 'Accedi per mettere mi piace',
     no_comments_yet: 'Nessun commento ancora. Sii il primo a commentare!',
-    comments_title: 'Commenti'
+    comments_title: 'Commenti',
+    user_profile: 'Profilo Utente',
+    back: 'Indietro',
+    update_username: 'Aggiorna Nome Utente',
+    updating: 'Aggiornamento...',
+    email_cannot_change: 'L\'email non può essere modificata',
+    danger_zone: 'Zona di Pericolo',
+    delete_account: 'Elimina Account',
+    delete_account_warning: 'Una volta eliminato il tuo account, non si può tornare indietro. Questo eliminerà permanentemente il tuo account e tutti i tuoi dati.',
+    delete_confirmation_title: 'Sei assolutamente sicuro?',
+    delete_confirmation_description: 'Questa azione non può essere annullata. Questo eliminerà permanentemente il tuo account e rimuoverà tutti i tuoi dati dai nostri server, inclusi tutti i tuoi post, commenti e mi piace.',
+    deleting: 'Eliminazione...',
+    yes_delete_account: 'Sì, elimina il mio account'
   },
   ja: {
     goya_communit: 'Goya Community',
@@ -638,7 +722,19 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     login_to_comment: 'コメントするにはログインしてください',
     login_to_like: 'いいねするにはログインしてください',
     no_comments_yet: 'まだコメントがありません。最初にコメントしてください！',
-    comments_title: 'コメント'
+    comments_title: 'コメント',
+    user_profile: 'ユーザープロフィール',
+    back: '戻る',
+    update_username: 'ユーザー名を更新',
+    updating: '更新中...',
+    email_cannot_change: 'メールアドレスは変更できません',
+    danger_zone: '危険なゾーン',
+    delete_account: 'アカウントを削除',
+    delete_account_warning: 'アカウントを削除すると、元に戻すことはできません。これにより、アカウントとすべてのデータが永久に削除されます。',
+    delete_confirmation_title: '本当によろしいですか？',
+    delete_confirmation_description: 'この操作は元に戻すことができません。これにより、アカウントが永久に削除され、すべての投稿、コメント、いいねを含むすべてのデータがサーバーから削除されます。',
+    deleting: '削除中...',
+    yes_delete_account: 'はい、アカウントを削除します'
   },
   ko: {
     goya_communit: 'Goya Community',
@@ -716,7 +812,19 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     login_to_comment: '댓글을 작성하려면 로그인하세요',
     login_to_like: '좋아요를 누르려면 로그인하세요',
     no_comments_yet: '아직 댓글이 없습니다. 첫 번째로 댓글을 달아보세요!',
-    comments_title: '댓글'
+    comments_title: '댓글',
+    user_profile: '사용자 프로필',
+    back: '뒤로',
+    update_username: '사용자명 업데이트',
+    updating: '업데이트 중...',
+    email_cannot_change: '이메일은 변경할 수 없습니다',
+    danger_zone: '위험 구역',
+    delete_account: '계정 삭제',
+    delete_account_warning: '계정을 삭제하면 되돌릴 수 없습니다. 이것은 귀하의 계정과 모든 데이터를 영구적으로 삭제합니다.',
+    delete_confirmation_title: '정말 확실합니까?',
+    delete_confirmation_description: '이 작업은 취소할 수 없습니다. 이것은 귀하의 계정을 영구적으로 삭제하고 모든 게시물, 댓글, 좋아요를 포함한 모든 데이터를 서버에서 제거합니다.',
+    deleting: '삭제 중...',
+    yes_delete_account: '네, 내 계정을 삭제합니다'
   },
   zh: {
     goya_communit: 'Goya Community',
@@ -794,7 +902,19 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     login_to_comment: '请登录以评论',
     login_to_like: '请登录以点赞',
     no_comments_yet: '暂无评论。成为第一个评论的人！',
-    comments_title: '评论'
+    comments_title: '评论',
+    user_profile: '用户资料',
+    back: '返回',
+    update_username: '更新用户名',
+    updating: '更新中...',
+    email_cannot_change: '邮箱无法更改',
+    danger_zone: '危险区域',
+    delete_account: '删除账户',
+    delete_account_warning: '一旦删除您的账户，就无法恢复。这将永久删除您的账户和所有数据。',
+    delete_confirmation_title: '您确定要这样做吗？',
+    delete_confirmation_description: '此操作无法撤销。这将永久删除您的账户并从我们的服务器中删除所有数据，包括您的所有帖子、评论和点赞。',
+    deleting: '删除中...',
+    yes_delete_account: '是的，删除我的账户'
   },
   ar: {
     goya_communit: 'Goya Community',
@@ -872,7 +992,19 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     login_to_comment: 'تسجيل الدخول للتعليق',
     login_to_like: 'تسجيل الدخول للإعجاب',
     no_comments_yet: 'لا توجد تعليقات بعد. كن أول من يعلق!',
-    comments_title: 'التعليقات'
+    comments_title: 'التعليقات',
+    user_profile: 'ملف المستخدم',
+    back: 'رجوع',
+    update_username: 'تحديث اسم المستخدم',
+    updating: 'جارٍ التحديث...',
+    email_cannot_change: 'لا يمكن تغيير البريد الإلكتروني',
+    danger_zone: 'منطقة الخطر',
+    delete_account: 'حذف الحساب',
+    delete_account_warning: 'بمجرد حذف حسابك، لن يكون هناك عودة. سيؤدي هذا إلى حذف حسابك وجميع بياناتك نهائياً.',
+    delete_confirmation_title: 'هل أنت متأكد تماماً؟',
+    delete_confirmation_description: 'لا يمكن التراجع عن هذا الإجراء. سيؤدي هذا إلى حذف حسابك نهائياً وإزالة جميع بياناتك من خوادمنا، بما في ذلك جميع منشوراتك وتعليقاتك وإعجاباتك.',
+    deleting: 'جارٍ الحذف...',
+    yes_delete_account: 'نعم، احذف حسابي'
   },
   ru: {
     goya_communit: 'Goya Community',
@@ -950,7 +1082,19 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     login_to_comment: 'Войдите чтобы комментировать',
     login_to_like: 'Войдите чтобы ставить лайки',
     no_comments_yet: 'Пока нет комментариев. Будьте первым, кто прокомментирует!',
-    comments_title: 'Комментарии'
+    comments_title: 'Комментарии',
+    user_profile: 'Профиль пользователя',
+    back: 'Назад',
+    update_username: 'Обновить имя пользователя',
+    updating: 'Обновление...',
+    email_cannot_change: 'Email нельзя изменить',
+    danger_zone: 'Опасная зона',
+    delete_account: 'Удалить аккаунт',
+    delete_account_warning: 'После удаления аккаунта пути назад нет. Это навсегда удалит ваш аккаунт и все ваши данные.',
+    delete_confirmation_title: 'Вы абсолютно уверены?',
+    delete_confirmation_description: 'Это действие нельзя отменить. Это навсегда удалит ваш аккаунт и удалит все ваши данные с наших серверов, включая все ваши посты, комментарии и лайки.',
+    deleting: 'Удаление...',
+    yes_delete_account: 'Да, удалить мой аккаунт'
   },
   hi: {
     goya_communit: 'Goya Community',
@@ -1028,7 +1172,19 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     login_to_comment: 'टिप्पणी करने के लिए लॉग इन करें',
     login_to_like: 'पसंद करने के लिए लॉग इन करें',
     no_comments_yet: 'अभी तक कोई टिप्पणी नहीं है। टिप्पणी करने वाले पहले व्यक्ति बनें!',
-    comments_title: 'टिप्पणियाँ'
+    comments_title: 'टिप्पणियाँ',
+    user_profile: 'उपयोगकर्ता प्रोफ़ाइल',
+    back: 'वापस',
+    update_username: 'उपयोगकर्ता नाम अपडेट करें',
+    updating: 'अपडेट हो रहा है...',
+    email_cannot_change: 'ईमेल नहीं बदला जा सकता',
+    danger_zone: 'खतरनाक क्षेत्र',
+    delete_account: 'खाता हटाएं',
+    delete_account_warning: 'एक बार आपका खाता हटाने के बाद, वापस जाने का कोई रास्ता नहीं है। यह आपके खाते और आपके सभी डेटा को स्थायी रूप से हटा देगा।',
+    delete_confirmation_title: 'क्या आप बिल्कुल निश्चित हैं?',
+    delete_confirmation_description: 'यह कार्रवाई पूर्ववत नहीं की जा सकती। यह आपके खाते को स्थायी रूप से हटा देगा और आपके सभी डेटा को हमारे सर्वर से हटा देगा, जिसमें आपकी सभी पोस्ट, टिप्पणियाँ और पसंद शामिल हैं।',
+    deleting: 'हटाया जा रहा है...',
+    yes_delete_account: 'हाँ, मेरा खाता हटाएं'
   }
 };
 
