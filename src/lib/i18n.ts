@@ -89,7 +89,9 @@ type TranslationKey =
   | 'no_posts_found'
   | 'no_posts_yet'
   | 'login_to_comment'
-  | 'login_to_like';
+  | 'login_to_like'
+  | 'no_comments_yet'
+  | 'comments_title';
 
 export const translations: Record<Language, Record<TranslationKey, string>> = {
   pt: {
@@ -166,7 +168,9 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     no_posts_found: 'Nenhum post encontrado com os filtros atuais.',
     no_posts_yet: 'Ainda não há posts. Seja o primeiro a compartilhar algo inspirador!',
     login_to_comment: 'Faça login para comentar',
-    login_to_like: 'Faça login para curtir'
+    login_to_like: 'Faça login para curtir',
+    no_comments_yet: 'Nenhum comentário ainda. Seja o primeiro a comentar!',
+    comments_title: 'Comentários'
   },
   en: {
     goya_communit: 'Goya Community',
@@ -242,7 +246,9 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     no_posts_found: 'No posts found with current filters.',
     no_posts_yet: 'No posts yet. Be the first to share something inspiring!',
     login_to_comment: 'Please log in to comment',
-    login_to_like: 'Please log in to like'
+    login_to_like: 'Please log in to like',
+    no_comments_yet: 'No comments yet. Be the first to comment!',
+    comments_title: 'Comments'
   },
   es: {
     goya_communit: 'Goya Community',
@@ -318,7 +324,9 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     no_posts_found: 'No se encontraron posts con los filtros actuales.',
     no_posts_yet: '¡Aún no hay posts. Sé el primero en compartir algo inspirador!',
     login_to_comment: 'Inicia sesión para comentar',
-    login_to_like: 'Inicia sesión para dar me gusta'
+    login_to_like: 'Inicia sesión para dar me gusta',
+    no_comments_yet: '¡Aún no hay comentarios. Sé el primero en comentar!',
+    comments_title: 'Comentarios'
   },
   fr: {
     goya_communit: 'Goya Community',
@@ -394,7 +402,9 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     no_posts_found: 'Aucun post trouvé avec les filtres actuels.',
     no_posts_yet: 'Pas encore de posts. Soyez le premier à partager quelque chose d\'inspirant!',
     login_to_comment: 'Connectez-vous pour commenter',
-    login_to_like: 'Connectez-vous pour aimer'
+    login_to_like: 'Connectez-vous pour aimer',
+    no_comments_yet: 'Aucun commentaire pour le moment. Soyez le premier à commenter!',
+    comments_title: 'Commentaires'
   },
   de: {
     goya_communit: 'Goya Community',
@@ -470,7 +480,9 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     no_posts_found: 'Keine Posts mit den aktuellen Filtern gefunden.',
     no_posts_yet: 'Noch keine Posts. Seien Sie der Erste, der etwas Inspirierendes teilt!',
     login_to_comment: 'Anmelden um zu kommentieren',
-    login_to_like: 'Anmelden um zu liken'
+    login_to_like: 'Anmelden um zu liken',
+    no_comments_yet: 'Noch keine Kommentare. Seien Sie der Erste, der kommentiert!',
+    comments_title: 'Kommentare'
   },
   it: {
     goya_communit: 'Goya Community',
@@ -546,7 +558,9 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     no_posts_found: 'Nessun post trovato con i filtri attuali.',
     no_posts_yet: 'Ancora nessun post. Sii il primo a condividere qualcosa di ispirante!',
     login_to_comment: 'Accedi per commentare',
-    login_to_like: 'Accedi per mettere mi piace'
+    login_to_like: 'Accedi per mettere mi piace',
+    no_comments_yet: 'Nessun commento ancora. Sii il primo a commentare!',
+    comments_title: 'Commenti'
   },
   ja: {
     goya_communit: 'Goya Community',
@@ -622,7 +636,9 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     no_posts_found: '現在のフィルターでは投稿が見つかりません。',
     no_posts_yet: 'まだ投稿がありません。最初にインスピレーションを与える投稿をしてください！',
     login_to_comment: 'コメントするにはログインしてください',
-    login_to_like: 'いいねするにはログインしてください'
+    login_to_like: 'いいねするにはログインしてください',
+    no_comments_yet: 'まだコメントがありません。最初にコメントしてください！',
+    comments_title: 'コメント'
   },
   ko: {
     goya_communit: 'Goya Community',
@@ -698,7 +714,9 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     no_posts_found: '현재 필터로는 게시물이 없습니다.',
     no_posts_yet: '아직 게시물이 없습니다. 영감을 주는 첫 번째 게시물을 공유하세요!',
     login_to_comment: '댓글을 작성하려면 로그인하세요',
-    login_to_like: '좋아요를 누르려면 로그인하세요'
+    login_to_like: '좋아요를 누르려면 로그인하세요',
+    no_comments_yet: '아직 댓글이 없습니다. 첫 번째로 댓글을 달아보세요!',
+    comments_title: '댓글'
   },
   zh: {
     goya_communit: 'Goya Community',
@@ -774,7 +792,9 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     no_posts_found: '没有找到符合当前筛选条件的帖子。',
     no_posts_yet: '还没有帖子。成为第一个分享鼓舞人心内容的人！',
     login_to_comment: '请登录以评论',
-    login_to_like: '请登录以点赞'
+    login_to_like: '请登录以点赞',
+    no_comments_yet: '暂无评论。成为第一个评论的人！',
+    comments_title: '评论'
   },
   ar: {
     goya_communit: 'Goya Community',
@@ -850,7 +870,9 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     no_posts_found: 'لم يتم العثور على منشورات بالمرشحات الحالية.',
     no_posts_yet: 'لا توجد منشورات بعد. كن أول من يشارك شيئاً ملهماً!',
     login_to_comment: 'تسجيل الدخول للتعليق',
-    login_to_like: 'تسجيل الدخول للإعجاب'
+    login_to_like: 'تسجيل الدخول للإعجاب',
+    no_comments_yet: 'لا توجد تعليقات بعد. كن أول من يعلق!',
+    comments_title: 'التعليقات'
   },
   ru: {
     goya_communit: 'Goya Community',
@@ -926,7 +948,9 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     no_posts_found: 'Посты с текущими фильтрами не найдены.',
     no_posts_yet: 'Пока нет постов. Будьте первым, кто поделится чем-то вдохновляющим!',
     login_to_comment: 'Войдите чтобы комментировать',
-    login_to_like: 'Войдите чтобы ставить лайки'
+    login_to_like: 'Войдите чтобы ставить лайки',
+    no_comments_yet: 'Пока нет комментариев. Будьте первым, кто прокомментирует!',
+    comments_title: 'Комментарии'
   },
   hi: {
     goya_communit: 'Goya Community',
@@ -1002,7 +1026,9 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     no_posts_found: 'वर्तमान फ़िल्टर के साथ कोई पोस्ट नहीं मिली।',
     no_posts_yet: 'अभी तक कोई पोस्ट नहीं है। कुछ प्रेरणादायक साझा करने वाले पहले व्यक्ति बनें!',
     login_to_comment: 'टिप्पणी करने के लिए लॉग इन करें',
-    login_to_like: 'पसंद करने के लिए लॉग इन करें'
+    login_to_like: 'पसंद करने के लिए लॉग इन करें',
+    no_comments_yet: 'अभी तक कोई टिप्पणी नहीं है। टिप्पणी करने वाले पहले व्यक्ति बनें!',
+    comments_title: 'टिप्पणियाँ'
   }
 };
 

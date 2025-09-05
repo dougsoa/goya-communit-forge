@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { useLanguage } from "@/hooks/useLanguage";
 import CommentItem from "./CommentItem";
 
 interface Comment {
@@ -27,6 +28,7 @@ const CommentsList = ({ postId, currentUserId, onCommentUpdated }: CommentsListP
   const [comments, setComments] = useState<Comment[]>([]);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
+  const { t } = useLanguage();
 
   useEffect(() => {
     fetchComments();
@@ -131,7 +133,7 @@ const CommentsList = ({ postId, currentUserId, onCommentUpdated }: CommentsListP
   if (comments.length === 0) {
     return (
       <div className="text-center py-8 text-muted-foreground">
-        <p>Nenhum comentário ainda. Seja o primeiro a comentar!</p>
+        <p>{t('no_comments_yet')}</p>
       </div>
     );
   }
@@ -139,7 +141,7 @@ const CommentsList = ({ postId, currentUserId, onCommentUpdated }: CommentsListP
   return (
     <div className="space-y-4">
       <h3 className="text-lg font-semibold text-foreground">
-        Comentários ({comments.length})
+        {t('comments_title')} ({comments.length})
       </h3>
       {comments.map((comment) => (
         <CommentItem
