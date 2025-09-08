@@ -8,9 +8,11 @@ import MinimalPostList from "@/components/MinimalPostList";
 import EnhancedPostList from "@/components/EnhancedPostList";
 import CreatePost from "@/components/CreatePost";
 import FooterBar from "@/components/FooterBar";
+import MobileBottomNav from "@/components/MobileBottomNav";
 import { useLanguage } from "@/hooks/useLanguage";
 import { Button } from "@/components/ui/button";
 import { Globe, User as UserIcon, LogOut } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Index = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -18,6 +20,7 @@ const Index = () => {
   const [refreshKey, setRefreshKey] = useState(0);
   const navigate = useNavigate();
   const { t } = useLanguage();
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -83,7 +86,7 @@ const Index = () => {
                   onClick={() => navigate("/profile")}
                   className="sm:hidden p-2"
                 >
-                  <UserIcon className="h-4 w-4" />
+                  <UserIcon className="h-4 w-4 text-primary" />
                 </Button>
                 <Button 
                   variant="ghost" 
@@ -105,7 +108,7 @@ const Index = () => {
               </div>
             ) : (
               <Button variant="community" size="sm" onClick={() => navigate("/auth")}>
-                <UserIcon className="h-4 w-4 mr-1 sm:mr-2" />
+                <UserIcon className="h-4 w-4 mr-1 sm:mr-2 text-primary" />
                 <span className="text-sm">{t('join')}</span>
               </Button>
             )}
@@ -129,8 +132,16 @@ const Index = () => {
 
         <EnhancedPostList key={refreshKey} user={user} />
       
-      <FooterBar />
+        {!isMobile && <FooterBar />}
       </main>
+
+      <MobileBottomNav 
+        user={user} 
+        onSignOut={() => {
+          setUser(null);
+          setUserProfile(null);
+        }} 
+      />
     </div>
   );
 };

@@ -8,6 +8,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { useLanguage } from "@/hooks/useLanguage";
 import { User, Mail, Trash2, Save, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useIsMobile } from "@/hooks/use-mobile";
+import MobileBottomNav from "@/components/MobileBottomNav";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -29,6 +31,7 @@ const UserProfile = () => {
   const { toast } = useToast();
   const { t } = useLanguage();
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     fetchUserData();
@@ -175,19 +178,19 @@ const UserProfile = () => {
               <Avatar className="h-20 w-20 ring-4 ring-primary/20 ring-offset-4 ring-offset-background">
                 <AvatarImage src={profile?.avatar_url} />
                 <AvatarFallback className="bg-gradient-primary text-primary-foreground text-2xl font-bold">
-                  {profile?.display_name?.charAt(0) || profile?.username?.charAt(0) || user.email?.charAt(0) || "?"}
+                  {profile?.username?.charAt(0) || user.email?.charAt(0) || "?"}
                 </AvatarFallback>
               </Avatar>
-              <div className="absolute -bottom-1 -right-1 h-6 w-6 bg-green-500 rounded-full border-2 border-background"></div>
+              <div className="absolute -bottom-1 -right-1 h-6 w-6 bg-primary rounded-full border-2 border-background"></div>
             </div>
             
             <div className="flex-1">
               <h2 className="text-2xl font-bold text-foreground mb-1">
-                {profile?.display_name || profile?.username || "User"}
+                {profile?.username || "User"}
               </h2>
               <p className="text-muted-foreground text-lg">@{profile?.username || "username"}</p>
               <div className="flex items-center mt-2 text-sm text-muted-foreground">
-                <div className="h-2 w-2 bg-green-500 rounded-full mr-2"></div>
+                <div className="h-2 w-2 bg-primary rounded-full mr-2"></div>
                 Online
               </div>
             </div>
@@ -280,6 +283,15 @@ const UserProfile = () => {
           </AlertDialog>
         </Card>
       </div>
+
+      {isMobile && (
+        <MobileBottomNav 
+          user={user} 
+          onSignOut={() => {
+            navigate("/");
+          }} 
+        />
+      )}
     </div>
   );
 };

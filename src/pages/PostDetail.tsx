@@ -6,6 +6,8 @@ import { Card } from "@/components/ui/card";
 import { ArrowLeft, Heart, MessageCircle, Edit, Trash2, MoreVertical } from "lucide-react";
 import { useLanguage } from "@/hooks/useLanguage";
 import { useToast } from "@/hooks/use-toast";
+import { useIsMobile } from "@/hooks/use-mobile";
+import MobileBottomNav from "@/components/MobileBottomNav";
 import MDEditor from '@uiw/react-md-editor';
 import CommentsList from "@/components/CommentsList";
 import CreateComment from "@/components/CreateComment";
@@ -49,6 +51,7 @@ const PostDetail = () => {
   const navigate = useNavigate();
   const { t, language } = useLanguage();
   const { toast } = useToast();
+  const isMobile = useIsMobile();
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
   const [isLiked, setIsLiked] = useState(false);
@@ -411,6 +414,15 @@ const PostDetail = () => {
           />
         </div>
       </div>
+
+      {isMobile && (
+        <MobileBottomNav 
+          user={user} 
+          onSignOut={() => {
+            navigate("/");
+          }} 
+        />
+      )}
     </div>
   );
 };
