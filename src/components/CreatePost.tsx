@@ -119,11 +119,11 @@ const CreatePost = ({ userProfile, onPostCreated }: CreatePostProps) => {
           <div className="relative">
             <Avatar className="h-12 w-12 ring-2 ring-primary/20 ring-offset-2 ring-offset-background">
               <AvatarImage src={userProfile?.avatar_url} />
-              <AvatarFallback className="bg-gradient-primary text-primary-foreground font-semibold">
-                {userProfile?.display_name?.charAt(0) || userProfile?.username?.charAt(0) || "?"}
+              <AvatarFallback className="bg-primary text-primary-foreground font-semibold">
+                {userProfile?.username?.charAt(0) || "?"}
               </AvatarFallback>
             </Avatar>
-            <div className="absolute -bottom-1 -right-1 h-4 w-4 bg-green-500 rounded-full border-2 border-background"></div>
+            <div className="absolute -bottom-1 -right-1 h-4 w-4 bg-primary rounded-full border-2 border-background"></div>
           </div>
           
           <button
@@ -154,16 +154,16 @@ const CreatePost = ({ userProfile, onPostCreated }: CreatePostProps) => {
             <div className="relative">
               <Avatar className="h-12 w-12 ring-2 ring-primary/20 ring-offset-2 ring-offset-background">
                 <AvatarImage src={userProfile?.avatar_url} />
-                <AvatarFallback className="bg-gradient-primary text-primary-foreground font-semibold">
-                  {userProfile?.display_name?.charAt(0) || userProfile?.username?.charAt(0) || "?"}
+                <AvatarFallback className="bg-primary text-primary-foreground font-semibold">
+                  {userProfile?.username?.charAt(0) || "?"}
                 </AvatarFallback>
               </Avatar>
-              <div className="absolute -bottom-1 -right-1 h-4 w-4 bg-green-500 rounded-full border-2 border-background"></div>
+              <div className="absolute -bottom-1 -right-1 h-4 w-4 bg-primary rounded-full border-2 border-background"></div>
             </div>
             
             <div>
               <h4 className="font-bold text-foreground text-lg">
-                {userProfile?.display_name || userProfile?.username || "Anonymous"}
+                {userProfile?.username || "Anonymous"}
               </h4>
               <p className="text-muted-foreground">
                 {t('share_ideas')}
