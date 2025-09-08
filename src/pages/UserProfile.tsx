@@ -177,7 +177,7 @@ const UserProfile = () => {
             <div className="relative">
               <Avatar className="h-20 w-20 ring-4 ring-primary/20 ring-offset-4 ring-offset-background">
                 <AvatarImage src={profile?.avatar_url} />
-                <AvatarFallback className="bg-gradient-primary text-primary-foreground text-2xl font-bold">
+                <AvatarFallback className="bg-primary text-primary-foreground text-2xl font-bold">
                   {profile?.username?.charAt(0) || user.email?.charAt(0) || "?"}
                 </AvatarFallback>
               </Avatar>
