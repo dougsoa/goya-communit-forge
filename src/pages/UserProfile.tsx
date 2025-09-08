@@ -188,7 +188,6 @@ const UserProfile = () => {
               <h2 className="text-2xl font-bold text-foreground mb-1">
                 {profile?.username || "User"}
               </h2>
-              <p className="text-muted-foreground text-lg">@{profile?.username || "username"}</p>
               <div className="flex items-center mt-2 text-sm text-muted-foreground">
                 <div className="h-2 w-2 bg-primary rounded-full mr-2"></div>
                 Online
